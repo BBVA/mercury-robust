@@ -17,6 +17,8 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
 ]
+[tool.setuptools.packages.find]
+exclude = ["docs*", "tests*", "tutorials"]
 dependencies = [
   'matplotlib>=3.0.2',
   'pandas>=0.24.2',
