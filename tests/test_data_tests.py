@@ -57,6 +57,28 @@ def test_sameschema(datasets):
     # SameSchemaTest(titanic, schma, schema_cat_threshold=0.01).run()
     SameSchemaTest(titanic, schma).run()
 
+def test_sameschema_custom_feature_map(datasets):
+
+    tips, titanic = datasets
+    titanic2 = titanic.copy()
+
+    force_types = {
+        'sex': FeatType.CATEGORICAL,
+        'pclass': FeatType.DISCRETE
+    }
+    schma_reference = DataSchema().generate(titanic, force_types=force_types).calculate_statistics()
+
+    # Same types are forced. the test runs fine
+    test = SameSchemaTest(
+        titanic2, 
+        schma_reference,
+        custom_feature_map={
+            'pclass': FeatType.DISCRETE,
+            'sex': FeatType.CATEGORICAL
+        }
+    )
+    test.run()
+
 
 def test_drift(datasets):
     tips, titanic = datasets
