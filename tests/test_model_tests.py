@@ -23,8 +23,7 @@ from mercury.robust.model_tests import (
     DriftPredictionsResistanceTest,
     ClassificationInvarianceTest,
     TreeCoverageTest,
-    DriftMetricResistanceTest,
-    DriftResistanceTest
+    DriftMetricResistanceTest
 )
 from mercury.robust.errors import FailedTestError
 
@@ -750,7 +749,7 @@ def test_drift_resistance_test():
     model = model.fit(X, y)
 
     drift_args = {'cols' : ['f0', 'f1', 'f2'], 'iqr' : [1, 1.1]}
-    test = DriftResistanceTest(model = model, X = X, drift_type = 'scale_drift', drift_args = drift_args, tolerance = X.shape[0]*0.5)
+    test = DriftPredictionsResistanceTest(model = model, X = X, drift_type = 'scale_drift', drift_args = drift_args, tolerance = X.shape[0]*0.5)
     test.run()
     assert test.info()["loss"] < test.tolerance
 
