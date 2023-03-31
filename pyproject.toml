@@ -21,7 +21,7 @@ dependencies = [
   'matplotlib>=3.0.2',
   'pandas>=0.24.2',
   'scikit-learn>=0.23.1',
-  'seaborn'
+  'seaborn',
   'mercury-dataschema'
 ]
 
