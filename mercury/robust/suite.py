@@ -1,13 +1,9 @@
 from .basetests import RobustTest
-from mercury.insight import logging
 
 import pandas as pd
 from typing import List, Union
-from mercury.robust._maturity import maturity, MaturityLevel
 
 
-@logging
-@maturity(MaturityLevel.Production)
 class TestSuite():
     """
     A TestSuite runs a list of tests. It has two modes of running them. By setting the `run_safe=True`
