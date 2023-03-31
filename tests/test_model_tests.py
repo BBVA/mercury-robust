@@ -18,7 +18,6 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from mercury.dataschema import DataSchema
 
 from mercury.robust.model_tests import (
-    FeatureCheckerTest,
     ModelReproducibilityTest,
     ModelSimplicityChecker,
     DriftPredictionsResistanceTest,
