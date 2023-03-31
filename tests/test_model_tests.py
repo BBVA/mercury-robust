@@ -15,7 +15,6 @@ from sklearn.datasets import make_classification, make_regression
 from sklearn.metrics import accuracy_score, roc_auc_score
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 
-from mercury.data.datasets import UCICredit
 from mercury.dataschema import DataSchema
 
 from mercury.robust.model_tests import (
@@ -669,7 +668,7 @@ def test_model_simplicity_multiclass_classification():
 
 
 def test_drift_prediction_resistance_test():
-    df = UCICredit().load()
+    df = pd.read_csv("../tutorials/data/credit/UCI_Credit_card.csv")
 
     df = df.loc[:, df.columns != 'ID']
 
