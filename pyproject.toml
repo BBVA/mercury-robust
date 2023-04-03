@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mercury-robust"
+license = {file = "LICENSE.txt"}
+version = "0.0.1"
+authors = [
+  { name="Mercury Team", email="mercury.group@bbva.com" },
+]
+description = "Mercury's robust is a library to perform robust testing on models and/or datasets.."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  'matplotlib>=3.0.2',
+  'pandas>=0.24.2',
+  'scikit-learn>=0.23.1',
+  'seaborn',
+  'mercury-dataschema',
+  'psutil',
+  'cleanlab'
+]
+
+[project.optional-dependencies]
+dev = [
+  'tensorflow<2.11',
+  'pytest',
+  'flake8',
+  'xgboost',
+]
+doc = [
+  'mkdocs',
+  'mkdocstrings[python]',
+  'mkdocs-material',
+  'mkdocs-minify-plugin==0.5.0',
+  'mkdocs-exclude',
+  'nbconvert',
+]
+
+[tool.setuptools.packages.find]
+include = ["mercury*"]
+exclude = ["docs*", "tests*", "tutorials"]
+
+
+[project.urls]
+"Homepage" = "https://github.com/BBVA/mercury-robust"
+"Bug Tracker" = "https://github.com/BBVA/mercury-robust/issues"
