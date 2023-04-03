@@ -932,8 +932,8 @@ class SampleLeakingTest(RobustDataTest):
         threshold (Union[float, int]): max percentage (float) or number (int) of samples that we allowed to be duplicated.
             By default is 0
         use_hash (bool): If True, it will create a hash for the rows in the dataframes in order to find duplicates. If False
-            it will use `duplicate()` pandas method. While `duplicate()` method usually is faster, it also consumes more
-            memory. By default is None, which uses the `duplicate()` method unless the memory usage of the process is high.
+            it will use `duplicate()` pandas method. Using hash usually results in faster execution in bigger datasets. If
+            None it will use one method or other depending of the available memory
         name (str): A name for the test. If not used, it will take the name of the class.
 
     Example:
@@ -1022,10 +1022,10 @@ class SampleLeakingTest(RobustDataTest):
     def _find_sample_leaking_hash_impl(self):
         cols = [c for c in self.base_dataset.columns if c not in self.ignore_feats]
 
-        base_dataset_hash = self.base_dataset[cols].apply(lambda x: hash(tuple(x)), axis=1)
+        base_dataset_hash = pd.util.hash_pandas_object(self.base_dataset[cols], index=False)
         base_dataset_hash = base_dataset_hash.drop_duplicates()
 
-        test_dataset_hash = self.test_dataset[cols].apply(lambda x: hash(tuple(x)), axis=1)
+        test_dataset_hash = pd.util.hash_pandas_object(self.test_dataset[cols], index=False)
         test_dataset_hash = test_dataset_hash.drop_duplicates()
 
         concat_hashes = pd.concat([base_dataset_hash, test_dataset_hash])
@@ -1066,8 +1066,8 @@ class NoDuplicatesTest(RobustDataTest):
         dataset (pandas.DataFrame): Dataset in which duplicates will be looked for.
         ignore_feats: List of columns that will be ignored when evaluating whether two samples are equal or not
         use_hash (bool): If True, it will create a hash for the rows in the dataframes in order to find duplicates. If False
-            it will use `duplicate()` pandas method. While `duplicate()` method usually is faster, it also consumes more
-            memory. By default is None, which uses the `duplicate()` method unless the memory usage of the process is high.
+            it will use `duplicate()` pandas method. Using hash usually results in faster execution in bigger datasets. If
+            None it will use one method or other depending of the available memory
         name (str): A name for the test. If not used, it will take the name of the class.
 
     Example:
@@ -1115,7 +1115,7 @@ class NoDuplicatesTest(RobustDataTest):
         if not self.use_hash:
             duplicates = dataset.duplicated()
         else:
-            hashes = dataset.apply(lambda r: hash(tuple(r)), axis=1)
+            hashes = pd.util.hash_pandas_object(dataset, index=False)
             duplicates = hashes.duplicated()
 
         self._num_duplicates = duplicates.sum()
