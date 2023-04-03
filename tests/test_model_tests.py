@@ -666,7 +666,7 @@ def test_model_simplicity_multiclass_classification():
 
 
 def test_drift_prediction_resistance_test():
-    df = pd.read_csv("../tutorials/data/credit/UCI_Credit_card.csv")
+    df = pd.read_csv("tutorials/data/credit/UCI_Credit_card.csv")
 
     df = df.loc[:, df.columns != 'ID']
 

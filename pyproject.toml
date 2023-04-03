@@ -23,7 +23,8 @@ dependencies = [
   'scikit-learn>=0.23.1',
   'seaborn',
   'mercury-dataschema',
-  'psutil'
+  'psutil',
+  'cleanlab'
 ]
 
 [project.optional-dependencies]

@@ -221,8 +221,8 @@ class DriftTest(RobustDataTest):
         Raises:
             FailedTestError if any drift is detected
         """
-        from _histogram_distance_drift_detector import HistogramDistanceDrift
-        from _chi2_drift_detector import Chi2Drift
+        from mercury.robust._histogram_distance_drift_detector import HistogramDistanceDrift
+        from mercury.robust._chi2_drift_detector import Chi2Drift
 
         super().run(*args, **kwargs)
 
