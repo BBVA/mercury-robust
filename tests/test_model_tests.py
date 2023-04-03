@@ -15,18 +15,15 @@ from sklearn.datasets import make_classification, make_regression
 from sklearn.metrics import accuracy_score, roc_auc_score
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 
-from mercury.data.datasets import UCICredit
 from mercury.dataschema import DataSchema
 
 from mercury.robust.model_tests import (
-    FeatureCheckerTest,
     ModelReproducibilityTest,
     ModelSimplicityChecker,
     DriftPredictionsResistanceTest,
     ClassificationInvarianceTest,
     TreeCoverageTest,
-    DriftMetricResistanceTest,
-    DriftResistanceTest
+    DriftMetricResistanceTest
 )
 from mercury.robust.errors import FailedTestError
 
@@ -669,7 +666,7 @@ def test_model_simplicity_multiclass_classification():
 
 
 def test_drift_prediction_resistance_test():
-    df = UCICredit().load()
+    df = pd.read_csv("tutorials/data/credit/UCI_Credit_card.csv")
 
     df = df.loc[:, df.columns != 'ID']
 
@@ -752,7 +749,7 @@ def test_drift_resistance_test():
     model = model.fit(X, y)
 
     drift_args = {'cols' : ['f0', 'f1', 'f2'], 'iqr' : [1, 1.1]}
-    test = DriftResistanceTest(model = model, X = X, drift_type = 'scale_drift', drift_args = drift_args, tolerance = X.shape[0]*0.5)
+    test = DriftPredictionsResistanceTest(model = model, X = X, drift_type = 'scale_drift', drift_args = drift_args, tolerance = X.shape[0]*0.5)
     test.run()
     assert test.info()["loss"] < test.tolerance
 

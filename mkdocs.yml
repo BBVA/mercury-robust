@@ -1,0 +1,42 @@
+site_name: mercury-robust
+repo_url: https://github.com/BBVA/mercury-robust/
+repo_name: mercury-robust
+theme:
+  name: material
+  features:
+  - tabs
+  - navigation.indexes
+  icon:
+    logo: material/book-open-page-variant
+    repo: fontawesome/brands/github
+site_dir: site
+nav:
+- Home: index.md
+- Api:
+  - base tests: reference/basetests.md
+  - data tests: reference/data_tests.md
+  - model tests: reference/model_tests.md
+markdown_extensions:
+- codehilite
+- admonition
+- pymdownx.superfences
+- pymdownx.arithmatex:
+    generic: true
+extra_css:
+- stylesheets/extra.css
+extra_javascript:
+- javascripts/config.js
+- https://polyfill.io/v3/polyfill.min.js?features=es6
+- https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+plugins:
+- mkdocstrings:
+    handlers:
+      python:
+        options:
+          show_root_heading: true
+          show_submodules: true
+          merge_init_into_class: true
+          docstring_style: google
+    watch:
+    - mercury/robust
+dev_addr: 0.0.0.0:8080
