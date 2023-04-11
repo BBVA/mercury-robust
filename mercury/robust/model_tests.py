@@ -1,4 +1,3 @@
-import warnings
 import numpy as np
 import pandas as pd
 import sklearn
@@ -17,7 +16,7 @@ from mercury.robust.errors import FailedTestError
 
 from mercury.dataschema.feature import FeatType
 from mercury.dataschema import DataSchema
-from ._drift_simulation import BatchDriftGenerator
+from mercury.monitoring.drift.drift_simulation import BatchDriftGenerator
 from ._tree_analysis import SkLearnTreeCoverageAnalyzer, SkLearnTreeEnsembleCoverageAnalyzer
 
 
