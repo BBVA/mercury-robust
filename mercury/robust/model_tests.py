@@ -906,6 +906,7 @@ class TreeCoverageTest(RobustModelTest):
         >>> rf = RandomForestClassifier().fit(train_data)
         >>> test = TreeCoverageTest(
         ...    rf,
+        ...    testing_dataset,
         ...    threshold_coverage=.8
         ...    name="My Tree Coverage Test"
         ... )
