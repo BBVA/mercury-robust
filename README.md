@@ -25,32 +25,34 @@ Errors or misbehaviours in machine learning models and datasets can have signifi
 **Data Tests** receive a dataset as the main input argument and check different conditions. For example, the `CohortPerformanceTest checks whether some metrics perform poorly for some cohorts of data when compared to other groups. This is particularly relevant for measuring fairness in sensitive variables.
 
 ### Model Tests
-**Model Tests** involve data in combination with a machine learning model. For example, the `FeatureCheckerTest` measures the importance of every input feature and fails if the model has input features that add very marginal contribution.
+**Model Tests** involve data in combination with a machine learning model. For example, the `ModelSimplicityChecker` evaluates if a simple baseline, trained in the same dataset, gives better or similar performance to a given model. It is used to check if added complexity contributes significantly to improve the model. 
+
+if the complexisty of the model is adecuate to the model  measures the importance of every input feature and fails if the model has input features that add very marginal contribution.
 
 ### TestSuite
 This class provides an easy way to group tests and execute them together. Here's an example of a `TestSuite` that checks for input features that add very marginal importance to the model, the existence of linear combinations in those features, or some kind of data drift:
 
 ```python 
-from mercury.robust.model_tests import FeatureCheckerTest
+from mercury.robust.model_tests import ModelSimplicityChecker
 from mercury.robust.data_tests import LinearCombinationsTest, DriftTest
 from mercury.robust.suite import TestSuite
 
 # Create some tests
-feat_test = FeatureCheckerTest(
-    model=model,
-    train=df_train,
-    target="label_col",
-    test=df_test,
-    num_tries=len(df_train.columns)-1,
-    remove_num=1,
-    tolerance=len(df_test)*0.01
+complexity_test = ModelSimplicityChecker(
+    model = model,
+    X_train = X_train,
+    y_train = y_train,
+    X_test = X_test,
+    y_test = y_test,
+    threshold = 0.02,
+    eval_fn = roc_auc_score
 )
 drift_test = DriftTest(df_test, train_schma, name="drift_train_test")
 lin_comb_test = LinearCombinationsTest(df_train)
 
 # Create the TestSuite with the tests
 test_suite = TestSuite(
-    tests=[feat_test, drift_test, lin_comb_test], run_safe=True
+    tests=[complexity_test, drift_test, lin_comb_test], run_safe=True
 )
 # Obtain results
 test_results = test_suite.get_results_as_df()
