@@ -23,7 +23,8 @@ from mercury.robust.model_tests import (
     DriftPredictionsResistanceTest,
     ClassificationInvarianceTest,
     TreeCoverageTest,
-    DriftMetricResistanceTest
+    DriftMetricResistanceTest,
+    FeatureCheckerTest
 )
 from mercury.robust.errors import FailedTestError
 
@@ -1033,3 +1034,91 @@ def test_drift_metric_resistance_test_invalid_inputs():
     )
     with pytest.raises(ValueError):
         test.run()
+
+def test_feature_checker_test():
+    df = pd.read_csv('%s/csv/test_twt.csv' % pathlib.Path(__file__).parent.resolve(), sep = '\t')
+
+    train, test = train_test_split(df, test_size = 0.2)
+
+    X_train = train.loc[:, train.columns != 'Y']
+    Y_train = train.loc[:, 'Y']
+
+    rf = RandomForestClassifier()
+    rf.fit(X_train, Y_train)
+
+    fct = FeatureCheckerTest(rf, train, 'Y', tolerance = 100)
+    with pytest.raises(FailedTestError):
+        fct.run()
+
+    fct = FeatureCheckerTest(rf, train, 'Y', test, tolerance = 100)
+    with pytest.raises(FailedTestError):
+        fct.run()
+
+    def eval_fun(Y_obs, Y_hat):
+        return sum((Y_obs - Y_hat)**2)
+
+    fct = FeatureCheckerTest(rf, train, 'Y', test, eval = eval_fun, tolerance = 100)
+    with pytest.raises(FailedTestError):
+        fct.run()
+
+    fct = FeatureCheckerTest(rf, train, 'Y', test, importance = 'feature_importances_', tolerance = 100)
+    with pytest.raises(FailedTestError):
+        fct.run()
+
+    fct = FeatureCheckerTest(rf, train, 'Y', test, importance = 'feature_importances_', eval = eval_fun, tolerance = 100, remove_num = 2, num_tries = 1)
+    with pytest.raises(FailedTestError):
+        fct.run()
+
+
+def test_feature_checker_test_model_function():
+
+    # Create Dataset
+    X, y = make_classification(200, n_features=5, n_informative=5, n_redundant=0)
+    df = pd.DataFrame(X, columns=["x1", "x2", "x3", "x4", "x5"])
+    df["x6"] = np.random.choice(["cat_0", "cat_1", "cat_2"], size=len(df)) # make categorical feature feature
+    df["y"] = y
+    df_train, df_test = train_test_split(df, test_size = 0.2)
+
+    # Define function to create the model (pipeline)
+    def create_pipeline_fn(X, model_args):
+
+        num_feats = [f for f in model_args['num_feats'] if f in X.columns]
+        cat_feats = [f for f in model_args['cat_feats'] if f in X.columns]
+
+        numeric_transformer = Pipeline(steps=[("scaler", StandardScaler())])
+        categorical_transformer = Pipeline(steps=[("ohe", OneHotEncoder(handle_unknown="ignore"))])
+
+        preprocessor = ColumnTransformer(
+            transformers=[
+                ("num", numeric_transformer, num_feats),
+                ("cat", categorical_transformer, cat_feats),
+            ], remainder='drop'
+        )
+
+        pipeline = Pipeline(
+            steps=[
+                ("preprocessor", preprocessor),
+                ("classifier", DecisionTreeClassifier())
+            ]
+        )
+        
+        return pipeline
+
+    # Create and run test
+    num_feats = ["x1", "x2", "x3", "x4", "x5"]
+    cat_feats = ["x6"]
+    model_fn_args = {
+        'num_feats': num_feats,
+        'cat_feats': cat_feats
+    }
+    test = FeatureCheckerTest(
+        model=create_pipeline_fn,
+        train=df_train,
+        target="y",
+        test=df_test,
+        tolerance=-1,
+        num_tries=3,
+        remove_num=1,
+        model_fn_args = model_fn_args,
+    )
+    test.run()

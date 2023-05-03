@@ -34,6 +34,7 @@ dev = [
   'pytest',
   'flake8',
   'xgboost',
+  'mercury-explainability'
 ]
 doc = [
   'mkdocs',
