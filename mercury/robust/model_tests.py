@@ -1,4 +1,3 @@
-import warnings
 import numpy as np
 import pandas as pd
 import sklearn
@@ -17,7 +16,7 @@ from mercury.robust.errors import FailedTestError
 
 from mercury.dataschema.feature import FeatType
 from mercury.dataschema import DataSchema
-from ._drift_simulation import BatchDriftGenerator
+from mercury.monitoring.drift.drift_simulation import BatchDriftGenerator
 from ._tree_analysis import SkLearnTreeCoverageAnalyzer, SkLearnTreeEnsembleCoverageAnalyzer
 
 
@@ -907,6 +906,7 @@ class TreeCoverageTest(RobustModelTest):
         >>> rf = RandomForestClassifier().fit(train_data)
         >>> test = TreeCoverageTest(
         ...    rf,
+        ...    testing_dataset,
         ...    threshold_coverage=.8
         ...    name="My Tree Coverage Test"
         ... )
@@ -973,3 +973,210 @@ class TreeCoverageTest(RobustModelTest):
 
     def info(self) -> dict:
         return {'coverage': self.coverage}
+    
+class FeatureCheckerTest(RobustModelTest):
+    """
+    This model robustness test checks if training the models using less columns in the dataframe can achieve identical results.
+    To do so, it uses the variable importance taken from the model itself or estimated using a mercury.explainability explainer
+    (ShuffleImportanceExplainer). It does a small number of attempts at removing unimportant variables and "fails if it succeeds",
+    since success implies that a smaller, therefore more efficient, dataset should be used instead. The purpose of this test is
+    not to find that optimal dataset. That can be achieved by removing the columns identified as unimportant and iterating.
+
+    **NOTE**: This class will retrain (fit) the model several times resulting in the model being altered as a side effect. Make
+    copies of your model before using this tool. This tool is intended as a diagnostic tool.
+
+    Args:
+        model: The model being evaluated. The model is assumed to comply to a minimalistic sklearn-like interface. More precisely:
+            1. It must have a fit() method that works on the dataset and the dataset with some columns removed. It is important that each
+            time the method fit() is called the model is trained from scratch (ie does not perform incremental training).
+            2. It must have a predict() method that works on the dataset and returns a vector that is accepted by the evaluation function.
+            3. If the argument `importance` is used, it must have an attribute with that name containing a list of (value, column_name)
+            tuples which is consistent with many sklearn models.
+            Alternatively, you can provide a function that creates a model or pipeline. This is useful in models or pipelines where
+            removing columns from a dataframe raises an error because it expects the removed column. In this case, the interface of
+            the function is model_fn(dataframe, model_args), where dataframe is the input pandas dataframe with the features already
+            removed and model_fn_args is a dictionary with optional parameters that can be passed to the function. Importantly,
+            this function just needs to create the model (unfitted) instance, but not to perform the training
+        model_fn_args: if you are using a function in `model` parameter, you can use this argument to provide arguments to that function.
+        train: The pandas dataset used for training the model, possibly with some columns removed.
+        target: The name of the target variable predicted by the model which must be one columns in the train dataset.
+        test: If given, a separate dataset with identical column structure used for the evaluation parts. Otherwise, the train dataset
+            will be used instead.
+        importance: If given, the name of a property in the model is updated by a fit() call. It must contain the importance of the
+            columns as a list of (value, column_name) tuples. Otherwise, the importance of the variables will be estimated using a
+            mercury.explainer ShuffleImportanceExplainer.
+        eval: If given, an evaluation function that defines what "identical" results are. The function must accept two vectors returned
+            by model.predict() and return some positive value that is smaller than `tolerance` if "identical". Otherwise a sum of squared
+            differences will be used instead.
+        tolerance: A real value to be compared with the result of the evaluation function. Note that the purpose of the test is finding
+            unimportant variables. Therefore, the test will fail when the result (named as `loss`) is smaller than the tolerance, meaning
+            the model could work "identically" well with less variables. When the test fails, you can see the value returned by the `eval`
+            function in the RuntimeError message displayed as `loss`.
+        num_tries: The total number of column removal tries the test should do before passing. This value times `remove_num` must be
+            smaller than the number of columns (Y excluded).
+        remove_num: The number of columns removed at each try.
+        name: A name for the test. If not used, it will take the name of the class.
+
+    Example:
+        ```python
+        >>> from mercury.robust.model_tests import FeatureCheckerTest
+        >>> test = FeatureCheckerTest(
+        >>>     model=model,
+        >>>     train=df_train,
+        >>>     target="label_col",
+        >>>     test=df_test,
+        >>>     num_tries=len(df_train.columns)-1,
+        >>>     remove_num=1,
+        >>>     tolerance=len(df_test)*0.01
+        >>> )
+        >>> test.run()
+        ```
+    """
+
+    def __init__(
+        self,
+        model: Union["Estimator", Callable],  # noqa: F821
+        train: pd.DataFrame,
+        target: str,
+        test: pd.DataFrame = None,
+        model_fn_args: dict = None,
+        importance: str = None,
+        eval: Callable = None,
+        tolerance: float = 1e-3,
+        num_tries: int = 3,
+        remove_num: int = 1,
+        name: str = None
+    ):
+        super().__init__(model, name)
+        self.model_fn_args = model_fn_args
+        self.train = train
+        self.target = target
+        self.test = test if test is not None else train
+        self.importance = importance
+        self.eval = eval
+        self.remove_num = remove_num
+        self.num_tries = num_tries
+        self.tolerance = tolerance
+        self.losses = {}
+
+    def info(self):
+        return self.losses
+
+    def _get_least_important(self, N):
+
+        names = []
+
+        if self.importance is None:
+
+            try:
+                from mercury.explainability.explainers import ShuffleImportanceExplainer
+            except:
+                raise ImportError(
+                    'Install mercury-explainability to use the FeatureCheckerTest with this type of model'
+                )
+
+            def model_inference_function(data, target):
+                assert target == self.target
+
+                X = data.loc[:, data.columns != self.target]
+                Y = data.loc[:, self.target]
+                Yh = self.fitted_model.predict(X)
+
+                if self.eval is None:
+                    return sum((Y - Yh) ** 2)
+
+                return self.eval(Y, Yh)
+
+            explainer = ShuffleImportanceExplainer(model_inference_function)
+
+            explanation = explainer.explain(self.test, target=self.target)
+
+            for name, _ in sorted(explanation.get_importances(), key=lambda x: x[1]):
+                names.append(name)
+                N -= 1
+                if N == 0:
+                    break
+
+            return names
+
+        try:
+            importance = getattr(self.model, self.importance)
+
+        except AttributeError:
+            return names
+
+        finally:
+            columns = self.test.columns[self.test.columns != self.target]
+            if len(columns) != len(importance):
+                return names
+
+            for _, name in sorted(zip(importance, columns)):
+                names.append(name)
+                N -= 1
+                if N == 0:
+                    break
+
+            return names
+
+    def run(self, *args, **kwargs):
+        """
+        Runs the test.
+
+        Raises:
+            `FailedTestError` with a descriptive message if any of the attempts fail.
+        """
+
+        super().run(*args, **kwargs)
+
+        N = self.remove_num * self.num_tries
+
+        X_train = self.train.loc[:, self.train.columns != self.target]
+        Y_train = self.train.loc[:, self.target]
+
+        # Fit model with all the features
+        self._fit_model(X_train, Y_train)
+
+        X_test = self.test.loc[:, self.test.columns != self.target]
+        Y_hat = self.fitted_model.predict(X_test)
+
+        remove = self._get_least_important(N)
+
+        if len(remove) != N:
+            raise RuntimeError(
+                "Wrong arguments. Not enough columns for remove_num*num_tries."
+            )
+
+        for t in range(self.num_tries):
+            exclude = remove[0:self.remove_num]
+            remove = remove[self.remove_num:]
+
+            exclude.append(self.target)
+
+            x_cols = [c for c in self.train.columns if c not in exclude]
+
+            X_alt_train = self.train.loc[:, x_cols]
+
+            # Fit model with the removed features
+            self._fit_model(X_alt_train, Y_train)
+
+            X_alt_test = self.test.loc[:, x_cols]
+            Y_alt_hat = self.fitted_model.predict(X_alt_test)
+
+            if self.eval is None:
+                loss = sum((Y_hat - Y_alt_hat) ** 2)
+            else:
+                loss = self.eval(Y_hat, Y_alt_hat)
+            self.losses[", ".join(exclude[:-1])] = loss
+
+            if loss < self.tolerance:
+                raise FailedTestError(
+                    "Test failed. A model fitted removing columns [%s] is identical within tolerance %.3f (loss = %.3f)"
+                    % (", ".join(exclude[:-1]), self.tolerance, loss)
+                )
+
+    def _fit_model(self, X, Y):
+        if callable(self.model):
+            self.fitted_model = self.model(X, self.model_fn_args)
+            self.fitted_model.fit(X, Y)
+        else:
+            self.fitted_model = self.model.fit(X, Y)

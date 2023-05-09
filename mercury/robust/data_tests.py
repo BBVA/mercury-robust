@@ -221,8 +221,8 @@ class DriftTest(RobustDataTest):
         Raises:
             FailedTestError if any drift is detected
         """
-        from mercury.robust._histogram_distance_drift_detector import HistogramDistanceDrift
-        from mercury.robust._chi2_drift_detector import Chi2Drift
+        from mercury.monitoring.drift.histogram_distance_drift_detector import HistogramDistanceDrift
+        from mercury.monitoring.drift.chi2_drift_detector import Chi2Drift
 
         super().run(*args, **kwargs)
 
@@ -590,7 +590,7 @@ class NoisyLabelsTest(RobustDataTest):
             (text_col not specified) or a CountVectorizer to encode text in case of a text dataset(text_col specified)
         ignore_feats (List[str]): features that will not be used in the algorithm to detect noisy labels.
         calculate_idx_issues (bool): whether to calculate also the index of samples with label issues. If True, the idx will be
-            available in `idx_issues_` attribute. Default value is False.
+            available in `idx_issues_` attribute. Default value is True.
         label_issues_args (dict): arguments for the algorithm to detect noisy labels. You can check documentation from
             `_label_cleaning.get_label_issues` to see all available arguments.
         schema_custom_feature_map: Internally, this test generates a DataSchema object. In case you find it makes
@@ -628,7 +628,7 @@ class NoisyLabelsTest(RobustDataTest):
                  text_col: str = None,
                  preprocessor: Union["TransformerMixin", "BaseEstimator"] = None,  # noqa: F821
                  ignore_feats: List[str] = None,
-                 calculate_idx_issues: bool = False,
+                 calculate_idx_issues: bool = True,
                  label_issues_args: dict = None,
                  name: str = None,
                  schema_custom_feature_map: Dict[str, FeatType] = None,

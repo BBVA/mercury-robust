@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "mercury-robust"
 license = {file = "LICENSE.txt"}
-version = "0.0.1"
+version = "0.0.2"
 authors = [
   { name="Mercury Team", email="mercury.group@bbva.com" },
 ]
@@ -23,6 +23,7 @@ dependencies = [
   'scikit-learn>=0.23.1',
   'seaborn',
   'mercury-dataschema',
+  'mercury-monitoring',
   'psutil',
   'cleanlab'
 ]
@@ -33,6 +34,7 @@ dev = [
   'pytest',
   'flake8',
   'xgboost',
+  'mercury-explainability'
 ]
 doc = [
   'mkdocs',
