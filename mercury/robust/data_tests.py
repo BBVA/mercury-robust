@@ -134,7 +134,14 @@ class LinearCombinationsTest(RobustDataTest):
             )
 
         if lin_combinations is not None:
-            raise FailedTestError("Test failed. Linear combinations for continuous features were encountered.")
+            # Create message with the linear combinations found
+            lin_combinations = np.around(lin_combinations, decimals=5)
+            lin_combs_found = []
+            for i in range(lin_combinations.shape[0]):
+                lin_comb_idx = np.where(lin_combinations[i] != 0)[0]
+                lin_comb_cols = self.base_dataset.loc[:, numeric_feats].columns[lin_comb_idx].tolist()
+                lin_combs_found.append(lin_comb_cols)
+            raise FailedTestError(f"Test failed. Linear combinations for continuous features were encountered: {lin_combs_found}.")
 
         individually_redundant = CategoryStruct.individually_redundant(self.base_dataset, current_schema.categorical_feats)
         if len(individually_redundant) > 0:

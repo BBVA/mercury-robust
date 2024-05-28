@@ -857,4 +857,20 @@ def test_no_duplicated_test():
     with pytest.raises(FailedTestError):
         test.run()
 
+def test_lin_combinations_cont():
 
+    df = pd.DataFrame()
+    df["f1"] = np.random.uniform(size=100)
+    df["f2"] = df["f1"] * 2
+    df["f3"] = np.random.uniform(size=100)
+    df["f4"] = df["f1"] + df["f2"]
+    df["f5"] = np.random.uniform(size=100)
+
+    df["f6"] = np.random.uniform(size=100)
+    df["f7"] = df["f6"] * 3
+    df["f8"] = df["f6"] * 0.1
+
+    schma_reference = DataSchema().generate(df).calculate_statistics()
+    linear_comb_test = LinearCombinationsTest(df, dataset_schema=schma_reference)
+    with pytest.raises(FailedTestError, match="'f1', 'f2'"):
+        linear_comb_test.run()

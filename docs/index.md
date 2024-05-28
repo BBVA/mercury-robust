@@ -1,7 +1,7 @@
 # mercury-robust
 
 [![](https://github.com/BBVA/mercury-robust/actions/workflows/test.yml/badge.svg)](https://github.com/BBVA/mercury-robust)
-![](https://img.shields.io/badge/latest-0.0.2-blue)
+![](https://img.shields.io/badge/latest-3-blue)
 
 ***mercury-robust*** is a library to perform robust testing on models and/or datasets.
 

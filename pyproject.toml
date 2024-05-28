@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "mercury-robust"
 license = {file = "LICENSE.txt"}
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   { name="Mercury Team", email="mercury.group@bbva.com" },
 ]
