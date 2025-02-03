@@ -1,12 +1,12 @@
 # mercury-robust
 
 [![](https://github.com/BBVA/mercury-robust/actions/workflows/test.yml/badge.svg)](https://github.com/BBVA/mercury-robust)
-![](https://img.shields.io/badge/latest-0.0.3-blue)
+![](https://img.shields.io/badge/latest-1.1.4-blue)
 
 ## Mercury project at BBVA
 
 Mercury is a collaborative library that was developed by the Advanced Analytics community at BBVA. Originally, it was created as an [InnerSource](https://en.wikipedia.org/wiki/Inner_source) project but after some time, we decided to release certain parts of the project as Open Source.
-That's the case with the `mercury-robust` package. 
+That's the case with the `mercury-robust` package.
 
 If you're interested in learning more about the Mercury project, we recommend reading this blog [post](https://www.bbvaaifactory.com/mercury-acelerando-la-reutilizacion-en-ciencia-de-datos-dentro-de-bbva/) from www.bbvaaifactory.com
 
@@ -25,14 +25,14 @@ Errors or misbehaviours in machine learning models and datasets can have signifi
 **Data Tests** receive a dataset as the main input argument and check different conditions. For example, the `CohortPerformanceTest checks whether some metrics perform poorly for some cohorts of data when compared to other groups. This is particularly relevant for measuring fairness in sensitive variables.
 
 ### Model Tests
-**Model Tests** involve data in combination with a machine learning model. For example, the `ModelSimplicityChecker` evaluates if a simple baseline, trained in the same dataset, gives better or similar performance to a given model. It is used to check if added complexity contributes significantly to improve the model. 
+**Model Tests** involve data in combination with a machine learning model. For example, the `ModelSimplicityChecker` evaluates if a simple baseline, trained in the same dataset, gives better or similar performance to a given model. It is used to check if added complexity contributes significantly to improve the model.
 
 if the complexisty of the model is adecuate to the model  measures the importance of every input feature and fails if the model has input features that add very marginal contribution.
 
 ### TestSuite
 This class provides an easy way to group tests and execute them together. Here's an example of a `TestSuite` that checks for input features that add very marginal importance to the model, the existence of linear combinations in those features, or some kind of data drift:
 
-```python 
+```python
 from mercury.robust.model_tests import ModelSimplicityChecker
 from mercury.robust.data_tests import LinearCombinationsTest, DriftTest
 from mercury.robust.suite import TestSuite
@@ -68,12 +68,12 @@ The easiest way to install `mercury-robust` is using ``pip``:
 
     pip install -U mercury-robust
 
-## Help and support 
+## Help and support
 
-This library is currently maintained by a dedicated team of data scientists and machine learning engineers from BBVA. 
+This library is currently maintained by a dedicated team of data scientists and machine learning engineers from BBVA.
 
 ### Documentation
 website: https://bbva.github.io/mercury-robust/
 
-### Email 
+### Email
 mercury.group@bbva.com
