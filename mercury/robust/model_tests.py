@@ -150,8 +150,7 @@ class ModelReproducibilityTest(RobustModelTest):
         """
         Runs the test.
 
-        Raises:
-            FailedTestError if training is not reproducible
+        Raises FailedTestError if training is not reproducible
         """
 
         super().run(*args, **kwargs)
@@ -456,7 +455,7 @@ class DriftPredictionsResistanceTest(RobustModelTest):
         names_categorical: An optional list with the names of the categorical variables. If this is used, the internal `BatchDriftGenerator`
             will use a `DataSchema` object to fully define the variables in X as either categorical (if in the list) or continuous
             (otherwise). This allows automatically selecting the columns without using the `cols` argument in `drift_args`. If this
-            parameter is not given, the `DataSchema` is not initally defined and either you select the columns manually by declaring a
+            parameter is not given, the `DataSchema` is not initially defined and either you select the columns manually by declaring a
             `cols` argument in `drift_args` or the `BatchDriftGenerator` will create a `DataSchema` than automatically infers the
             column types.
         dataset_schema: Alternatively, you can provide a pre built schema for an even higher level of control. If you use this argument,
@@ -465,7 +464,7 @@ class DriftPredictionsResistanceTest(RobustModelTest):
         eval: If given, an evaluation function that defines how "different" the predictions are. The function must accept two vectors
             returned by model.predict() and return some positive value that indicates the difference in the predictions and is compared
             with `tolerance`. If not given, then a sum of squared differences will be used unless the `model.predict()` method generates
-            the hard labels for a multiclass classification problem. In this last case, the `eval` function will be a function to compute
+            the hard labels for a multi-class classification problem. In this last case, the `eval` function will be a function to compute
             the number of different predictions.
         tolerance: A real value to be compared with the result of the evaluation function. Note that the purpose of the test is to check
             if the model is robust to the introduced drift. Therefore, the test will fail when the result (named as `loss`) is higher than
@@ -599,7 +598,7 @@ class DriftMetricResistanceTest(DriftPredictionsResistanceTest, TaskInferrer):
         names_categorical: An optional list with the names of the categorical variables. If this is used, the internal `BatchDriftGenerator`
             will use a `DataSchema` object to fully define the variables in X as either categorical (if in the list) or continuous
             (otherwise). This allows automatically selecting the columns without using the `cols` argument in `drift_args`. If this
-            parameter is not given, the `DataSchema` is not initally defined and either you select the columns manually by declaring a
+            parameter is not given, the `DataSchema` is not initially defined and either you select the columns manually by declaring a
             `cols` argument in `drift_args` or the `BatchDriftGenerator` will create a `DataSchema` than automatically infers the
             column types.
         dataset_schema: Alternatively, you can provide a pre built schema for an even higher level of control. If you use this argument,
@@ -609,7 +608,7 @@ class DriftMetricResistanceTest(DriftPredictionsResistanceTest, TaskInferrer):
             `eval_fn(y_true, y_hat)`. If not used, the mean absolute error will be used for regression and the accuracy for
             classification.
         tolerance: A real value to be compared with the difference of the computed metric with the non-drifted dataset and with the
-            dirfted dataset.
+            drifted dataset.
         task: 'classification' or 'regression'. If not given, the test will try to infer it from `Y`
         name: A name for the test. If not used, it will take the name of the class.
 
@@ -699,7 +698,7 @@ class ClassificationInvarianceTest(RobustModelTest):
     an error if the percentage of samples where the label is not preserved is higher than a specified threshold. We must pass to the test
     the original samples and the already generated perturbed samples.
 
-    When calling run(), a exception `FailedTestError` is raised if the test fails. Additonally, the next attributes are filled:
+    When calling run(), a exception `FailedTestError` is raised if the test fails. Additionally, the next attributes are filled:
 
         - preds_original_samples: stores the predictions for the original samples
         - preds_perturbed_samples: stores the predictions for perturbed samples
@@ -708,7 +707,7 @@ class ClassificationInvarianceTest(RobustModelTest):
         - num_failed_per_sample: stores for each sample the number of perturbations where the prediction is different to the original sample
         - num_perturbed_per_sample: stores for each samples the number of perturbations
         - samples_with_errors: boolean array containing which samples contain errors
-        - rate_samples_with_errors: the percentage of samples that contains at least one pertubed sample that the model predicted
+        - rate_samples_with_errors: the percentage of samples that contains at least one perturbed sample that the model predicted
             a different label.
         - total_rate_errors: the total percentage of perturbed samples that the model predicted a different label
 
@@ -728,7 +727,7 @@ class ClassificationInvarianceTest(RobustModelTest):
         threshold (float): if the percentage of samples with errors is higher than this threshold, then a `FailedTestError`
             will be raised. Default value is 0.05
         check_total_errors_rate (bool): this indicates what to consider as percentage of errors. If True, then each perturbed
-            sample counts to calculate the rate. If False, then the rate is calculated with the number of samples indepedently
+            sample counts to calculate the rate. If False, then the rate is calculated with the number of samples independently
             of how many perturbations each sample has. Default value is True
         name (str): A name for the test. If not used, it will take the name of the class.
 
@@ -736,12 +735,12 @@ class ClassificationInvarianceTest(RobustModelTest):
         ```python
         >>> original_samples = ["sample1", "sample2"]
         >>> perturbed_samples = [
-        ...    "pertubed_sample_1 for sample1", "perturbed_sample_2 for sample1",
+        ...    "perturbed_sample_1 for sample1", "perturbed_sample_2 for sample1",
         ...    "perturbed_sample_1 for sample2", "perturbed_sample2 for sample2"
         ... ]
         >>> test = ClassificationInvarianceTest(
         ...    original_samples,
-        ...    pertubed_samples,
+        ...    perturbed_samples,
         ...    predict_fn=my_model.predict,
         ...    threshold=0.1,
         ...    check_total_errors_rate=True,
@@ -973,7 +972,7 @@ class TreeCoverageTest(RobustModelTest):
 
     def info(self) -> dict:
         return {'coverage': self.coverage}
-    
+
 class FeatureCheckerTest(RobustModelTest):
     """
     This model robustness test checks if training the models using less columns in the dataframe can achieve identical results.

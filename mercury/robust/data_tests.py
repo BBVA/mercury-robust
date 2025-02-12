@@ -34,9 +34,9 @@ class SameSchemaTest(RobustDataTest):
     Example:
         ```python
         >>> from mercury.dataschema import DataSchema
-        >>> schma_reference = DataSchema().generate(df_train).calculate_statistics()
+        >>> schema_reference = DataSchema().generate(df_train).calculate_statistics()
         >>> from mercury.robust.data_tests import SameSchemaTest
-        >>> test = SameSchemaTest(df_inference, schma_reference)
+        >>> test = SameSchemaTest(df_inference, schema_reference)
         >>> test.run()
         ```
 
@@ -58,8 +58,7 @@ class SameSchemaTest(RobustDataTest):
         """
         Runs the test.
 
-        Raises:
-            FailedTestError if any of the checks fail.
+        Raises FailedTestError if any of the checks fail.
         """
         super().run(*args, **kwargs)
         current_schema = DataSchema().generate(self.base_dataset, force_types=self.custom_feature_map)
@@ -111,8 +110,7 @@ class LinearCombinationsTest(RobustDataTest):
         """
         Runs the test.
 
-        Raises:
-            FailedTestError if any of the checks fail.
+        Raises FailedTestError if any of the checks fail.
         """
         from ._linalg import lin_combs_in_columns
         from ._category_struct import CategoryStruct
@@ -172,9 +170,9 @@ class DriftTest(RobustDataTest):
     Example:
         ```python
         >>> from mercury.dataschema import DataSchema
-        >>> schma_reference = DataSchema().generate(df_train).calculate_statistics()
+        >>> schema_reference = DataSchema().generate(df_train).calculate_statistics()
         >>> from mercury.robust.data_tests import DriftTest
-        >>> test = DriftTest(df_inference, schma_reference)
+        >>> test = DriftTest(df_inference, schema_reference)
         >>> test.run()
         >>> # Check test result details
         >>> test.info()
@@ -225,8 +223,7 @@ class DriftTest(RobustDataTest):
         """
         Runs the test.
 
-        Raises:
-            FailedTestError if any drift is detected
+        Raises FailedTestError if any drift is detected
         """
         from mercury.monitoring.drift.histogram_distance_drift_detector import HistogramDistanceDrift
         from mercury.monitoring.drift.chi2_drift_detector import Chi2Drift
@@ -474,8 +471,7 @@ class LabelLeakingTest(RobustDataTest):
         """
         Runs the test.
 
-        Raises:
-            FailedTestError if any of the checks fail.
+        Raises FailedTestError if any of the checks fail.
         """
         from ._treeselector import TreeSelector
         from sklearn.metrics import r2_score, roc_auc_score
@@ -752,8 +748,7 @@ class NoisyLabelsTest(RobustDataTest):
         """
         Runs the test.
 
-        Raises:
-            FailedTestError if noise above threshold is detected
+        Raises FailedTestError if noise above threshold is detected
         """
         from ._label_cleaning import get_label_issues, get_confident_joint
 
@@ -912,8 +907,7 @@ class CohortPerformanceTest(RobustDataTest):
         """
         Runs the test.
 
-        Raises:
-            FailedTestError if metric difference above the threshold is detected
+        Raises FailedTestError if metric difference above the threshold is detected
         """
         super().run(*args, **kwargs)
 
@@ -984,8 +978,7 @@ class SampleLeakingTest(RobustDataTest):
         """
         Runs the test.
 
-        Raises:
-            FailedTestError if samples in test set existing in train are above threshold
+        Raises FailedTestError if samples in test set existing in train are above threshold
         """
         self._verify_datasets()
         self._is_duplicated_test = self._find_sample_leaking()
@@ -1115,8 +1108,7 @@ class NoDuplicatesTest(RobustDataTest):
         """
         Runs the test.
 
-        Raises:
-            FailedTestError if there exist duplicated samples in the provided dataframe
+        Raises FailedTestError if there exist duplicated samples in the provided dataframe
         """
         dataset = self.base_dataset[[x for x in self.base_dataset.columns if x not in self.ignore_feats]]
         if not self.use_hash:
