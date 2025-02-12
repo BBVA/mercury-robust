@@ -443,34 +443,34 @@ class DriftPredictionsResistanceTest(RobustModelTest):
     appropriate names to simplify following up the results.
 
     Args:
-        model: The model being evaluated. The model must be already trained and will not be trained again by this test. It is assumed to
-            have a sklearn-like compliant predict() method that works on the dataset and returns a vector that is accepted by the
+        model (Any): The model being evaluated. The model must be already trained and will not be trained again by this test. It is assumed
+        	to have a sklearn-like compliant predict() method that works on the dataset and returns a vector that is accepted by the
             evaluation function.
-        X: A pandas dataset that can be used by the model's predict() method and whose predicted values will be used as the ground truth
-            drift measurement.
-        drift_type: The name of the method of a BatchDriftGenerator specifying the type of drift to be applied. E.g., "shift_drift",
+        X (pd.DataFrame): A pandas dataset that can be used by the model's predict() method and whose predicted values will be used as the
+        	ground truth drift measurement.
+        drift_type (str): The name of the method of a BatchDriftGenerator specifying the type of drift to be applied. E.g., "shift_drift",
             "scale_drift", ... You can check the class BatchDriftGenerator in _drift_simulation to see all available types
-        drift_args: A dictionary with the argument expected by the drift method. E.g., {cols: ['a', 'b'], iqr: [1.12, 1.18]} for
+        drift_args (dict): A dictionary with the argument expected by the drift method. E.g., {cols: ['a', 'b'], iqr: [1.12, 1.18]} for
             "scale_drift".
-        names_categorical: An optional list with the names of the categorical variables. If this is used, the internal `BatchDriftGenerator`
-            will use a `DataSchema` object to fully define the variables in X as either categorical (if in the list) or continuous
-            (otherwise). This allows automatically selecting the columns without using the `cols` argument in `drift_args`. If this
-            parameter is not given, the `DataSchema` is not initially defined and either you select the columns manually by declaring a
-            `cols` argument in `drift_args` or the `BatchDriftGenerator` will create a `DataSchema` than automatically infers the
-            column types.
-        dataset_schema: Alternatively, you can provide a pre built schema for an even higher level of control. If you use this argument,
-            `names_categorical` is not used. The schema fully defines binary, categorical, discrete or continuous. If you still define
-            the `cols` argument in `drift_args`, that selection will prevail over whatever is in `dataset_schema`.
-        eval: If given, an evaluation function that defines how "different" the predictions are. The function must accept two vectors
-            returned by model.predict() and return some positive value that indicates the difference in the predictions and is compared
-            with `tolerance`. If not given, then a sum of squared differences will be used unless the `model.predict()` method generates
-            the hard labels for a multi-class classification problem. In this last case, the `eval` function will be a function to compute
-            the number of different predictions.
-        tolerance: A real value to be compared with the result of the evaluation function. Note that the purpose of the test is to check
-            if the model is robust to the introduced drift. Therefore, the test will fail when the result (named as `loss`) is higher than
-            the tolerance, meaning the model predictions considerably change with the introduced drift. When the test fails, you can see the
-            value returned by the `eval` function in the RuntimeError message displayed as `loss`.
-        name: A name for the test. If not used, it will take the name of the class.
+        names_categorical (List[str], optional): An optional list with the names of the categorical variables. If this is used, the
+        	internal `BatchDriftGenerator` will use a `DataSchema` object to fully define the variables in X as either categorical (if
+            in the list) or continuous (otherwise). This allows automatically selecting the columns without using the `cols` argument
+            in `drift_args`. If this parameter is not given, the `DataSchema` is not initially defined and either you select the columns
+            manually by declaring a `cols` argument in `drift_args` or the `BatchDriftGenerator` will create a `DataSchema` that
+            automatically infers the column types.
+        dataset_schema (DataSchema, optional): Alternatively, you can provide a pre built schema for an even higher level of control. If
+        	you use this argument, `names_categorical` is not used. The schema fully defines binary, categorical, discrete or continuous.
+            If you still define the `cols` argument in `drift_args`, that selection will prevail over whatever is in `dataset_schema`.
+        eval (Callable, optional): If given, an evaluation function that defines how "different" the predictions are. The function must
+        	accept two vectors returned by model.predict() and return some positive value that indicates the difference in the predictions
+            and is compared with `tolerance`. If not given, then a sum of squared differences will be used unless the `model.predict()`
+            method generates the hard labels for a multi-class classification problem. In this last case, the `eval` function will be a
+            function to compute the number of different predictions.
+        tolerance (float): A real value to be compared with the result of the evaluation function. Note that the purpose of the test is to
+        	check if the model is robust to the introduced drift. Therefore, the test will fail when the result (named as `loss`) is
+            higher than the tolerance, meaning the model predictions considerably change with the introduced drift. When the test fails,
+            you can see the value returned by the `eval` function in the RuntimeError message displayed as `loss`.
+        name (str, optional): A name for the test. If not used, it will take the name of the class.
 
     Example:
         ```python
@@ -535,8 +535,7 @@ class DriftPredictionsResistanceTest(RobustModelTest):
         """
         Runs the test.
 
-        Raises:
-            `FailedTestError` with a descriptive message if any of the attempts fail.
+        Raises `FailedTestError` with a descriptive message if any of the attempts fail.
         """
 
         super().run(*args, **kwargs)
@@ -584,33 +583,33 @@ class DriftMetricResistanceTest(DriftPredictionsResistanceTest, TaskInferrer):
     appropriate names to simplify following up the results.
 
     Args:
-        model: The model being evaluated. The model must be already trained and will not be trained again by this test. It is assumed to
-            have a sklearn-like compliant predict() method that works on the dataset and returns a vector that is accepted by the
-            evaluation function.
-        X: A pandas dataset that can be used by the model's predict() method and whose predicted values will be used as the ground truth
-            drift measurement.
-        Y: array with the ground truth values. It will be used to calculate the metric for the non-drifted dataset and for the drifted
-            dataset
-        drift_type: The name of the method of a BatchDriftGenerator specifying the type of drift to be applied. E.g., "shift_drift",
+        model (Any): The model being evaluated. The model must be already trained and will not be trained again by this test. It is
+        	assumed to have a sklearn-like compliant predict() method that works on the dataset and returns a vector that is accepted by
+            the evaluation function.
+        X (pd.DataFrame): A pandas dataset that can be used by the model's predict() method and whose predicted values will be used as
+        	the ground truth drift measurement.
+        Y (Union["pandas.DataFrame", np.ndarray]): array with the ground truth values. It will be used to calculate the metric for the
+        	non-drifted dataset and for the drifted dataset
+        drift_type (str): The name of the method of a BatchDriftGenerator specifying the type of drift to be applied. E.g., "shift_drift",
             "scale_drift", ... You can check the class BatchDriftGenerator in _drift_simulation to see all available types
-        drift_args: A dictionary with the argument expected by the drift method. E.g., {cols: ['a', 'b'], iqr: [1.12, 1.18]} for
+        drift_args (dict): A dictionary with the argument expected by the drift method. E.g., {cols: ['a', 'b'], iqr: [1.12, 1.18]} for
             "scale_drift".
-        names_categorical: An optional list with the names of the categorical variables. If this is used, the internal `BatchDriftGenerator`
-            will use a `DataSchema` object to fully define the variables in X as either categorical (if in the list) or continuous
-            (otherwise). This allows automatically selecting the columns without using the `cols` argument in `drift_args`. If this
-            parameter is not given, the `DataSchema` is not initially defined and either you select the columns manually by declaring a
-            `cols` argument in `drift_args` or the `BatchDriftGenerator` will create a `DataSchema` than automatically infers the
-            column types.
-        dataset_schema: Alternatively, you can provide a pre built schema for an even higher level of control. If you use this argument,
-            `names_categorical` is not used. The schema fully defines binary, categorical, discrete or continuous. If you still define
-            the `cols` argument in `drift_args`, that selection will prevail over whatever is in `dataset_schema`.
-        eval: the evaluation function to use to calculate the metric. If passed, the interface of the function must be
-            `eval_fn(y_true, y_hat)`. If not used, the mean absolute error will be used for regression and the accuracy for
+        names_categorical (List[str], optional): An optional list with the names of the categorical variables. If this is used, the
+        	internal `BatchDriftGenerator` will use a `DataSchema` object to fully define the variables in X as either categorical
+            (if in the list) or continuous (otherwise). This allows automatically selecting the columns without using the `cols` argument
+            in `drift_args`. If this parameter is not given, the `DataSchema` is not initially defined and either you select the columns
+            manually by declaring a `cols` argument in `drift_args` or the `BatchDriftGenerator` will create a `DataSchema` that
+            automatically infers the column types.
+        dataset_schema (DataSchema, optional): Alternatively, you can provide a pre built schema for an even higher level of control. If
+        	you use this argument, `names_categorical` is not used. The schema fully defines binary, categorical, discrete or continuous.
+            If you still define the `cols` argument in `drift_args`, that selection will prevail over whatever is in `dataset_schema`.
+        eval (Callable, optional):: the evaluation function to use to calculate the metric. If passed, the interface of the function must
+        	be `eval_fn(y_true, y_hat)`. If not used, the mean absolute error will be used for regression and the accuracy for
             classification.
-        tolerance: A real value to be compared with the difference of the computed metric with the non-drifted dataset and with the
+        tolerance (float): A real value to be compared with the difference of the computed metric with the non-drifted dataset and with the
             drifted dataset.
-        task: 'classification' or 'regression'. If not given, the test will try to infer it from `Y`
-        name: A name for the test. If not used, it will take the name of the class.
+        task (str): 'classification' or 'regression'. If not given, the test will try to infer it from `Y`
+        name (str): A name for the test. If not used, it will take the name of the class.
 
     Example:
         ```python
@@ -802,8 +801,8 @@ class ClassificationInvarianceTest(RobustModelTest):
         Returns examples of samples that failed.
 
         Args:
-            - n_samples (int): number of samples to recover.
-            - n_perturbed (int): for each sample, how many failed perturbations to recover.
+            n_samples (int): number of samples to recover.
+            n_perturbed (int): for each sample, how many failed perturbations to recover.
         """
 
         selected_failed_samples = self._select_random_failed_samples(n_samples)
@@ -1121,8 +1120,7 @@ class FeatureCheckerTest(RobustModelTest):
         """
         Runs the test.
 
-        Raises:
-            `FailedTestError` with a descriptive message if any of the attempts fail.
+        Raises `FailedTestError` with a descriptive message if any of the attempts fail.
         """
 
         super().run(*args, **kwargs)
