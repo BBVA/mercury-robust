@@ -314,8 +314,7 @@ class DriftTest(RobustDataTest):
             Two numpy arrays, the first containing the histogram for the source dataset,
             and the second containing the histogram for the target dataset
 
-        Raises:
-            ValueError if the new feature has a new value not present in the schema.
+        Raises ValueError if the new feature has a new value not present in the schema.
         """
 
         schema_ref = self.schema_ref
@@ -669,10 +668,10 @@ class NoisyLabelsTest(RobustDataTest):
         Converts text from text_col column in X to a feature vector.
 
         Args:
-            X: features dataframe containing the text to preprocess
+            X (pd.DataFrame): features dataframe containing the text to preprocess
 
         Returns:
-            np.array with the preprocessed text
+            (np.array): The preprocessed text
         """
 
         # If preprocessor specified we use it, otherwise create a simple CountVectorizer
@@ -689,11 +688,11 @@ class NoisyLabelsTest(RobustDataTest):
         Preprocesses the features from a tabular dataframe.
 
         Args:
-            X: features dataframe to preprocess
-            current_schema: schema of the dataset
+            X (pd.DataFrame): features dataframe to preprocess
+            current_schema (Schema): schema of the dataset
 
         Returns:
-            np.array with the preprocessed features
+            (np.array): The preprocessed features
         """
         # If preprocessor specified we use it
         if self.preprocessor:
