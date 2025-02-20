@@ -81,7 +81,7 @@ The easiest way to install `mercury-robust` is using ``pip``:
 This library is currently maintained by a dedicated team of data scientists and machine learning engineers from BBVA.
 
 ### Documentation
-website: https://bbva.github.io/mercury-robust/
+website: https://bbva.github.io/mercury-robust/site/
 
 ### Email
 mercury.group@bbva.com
