@@ -1,0 +1,3508 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../basetests/">
+      
+      
+        <link rel="next" href="../model_tests/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.45">
+    
+    
+      
+        <title>data tests - mercury-robust</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#data-tests" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="mercury-robust" class="md-header__button md-logo" aria-label="mercury-robust" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 2-5 4.5v11l5-4.5zM6.5 5C4.55 5 2.45 5.4 1 6.5v14.66c0 .25.25.5.5.5.1 0 .15-.07.25-.07 1.35-.65 3.3-1.09 4.75-1.09 1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.31 4.75 1.06.1.05.15.03.25.03.25 0 .5-.25.5-.5V6.5c-.6-.45-1.25-.75-2-1V19c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V6.5C10.55 5.4 8.45 5 6.5 5"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            mercury-robust
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              data tests
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/BBVA/mercury-robust/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mercury-robust
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="mercury-robust" class="md-nav__button md-logo" aria-label="mercury-robust" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 2-5 4.5v11l5-4.5zM6.5 5C4.55 5 2.45 5.4 1 6.5v14.66c0 .25.25.5.5.5.1 0 .15-.07.25-.07 1.35-.65 3.3-1.09 4.75-1.09 1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.31 4.75 1.06.1.05.15.03.25.03.25 0 .5-.25.5-.5V6.5c-.6-.45-1.25-.75-2-1V19c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V6.5C10.55 5.4 8.45 5 6.5 5"/></svg>
+
+    </a>
+    mercury-robust
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/BBVA/mercury-robust/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mercury-robust
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Api
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Api
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../basetests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    base tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    data tests
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    data tests
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      data_tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="data_tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.CohortPerformanceTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      CohortPerformanceTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CohortPerformanceTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.CohortPerformanceTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.DriftTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      DriftTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DriftTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.DriftTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.LabelLeakingTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      LabelLeakingTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LabelLeakingTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.LabelLeakingTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.LinearCombinationsTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      LinearCombinationsTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LinearCombinationsTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.LinearCombinationsTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.NoDuplicatesTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      NoDuplicatesTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NoDuplicatesTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.NoDuplicatesTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.NoisyLabelsTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      NoisyLabelsTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NoisyLabelsTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.NoisyLabelsTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.SameSchemaTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      SameSchemaTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SameSchemaTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.SameSchemaTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.SampleLeakingTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      SampleLeakingTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SampleLeakingTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.SampleLeakingTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model_tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    model tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      data_tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="data_tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.CohortPerformanceTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      CohortPerformanceTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CohortPerformanceTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.CohortPerformanceTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.DriftTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      DriftTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DriftTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.DriftTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.LabelLeakingTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      LabelLeakingTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LabelLeakingTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.LabelLeakingTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.LinearCombinationsTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      LinearCombinationsTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LinearCombinationsTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.LinearCombinationsTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.NoDuplicatesTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      NoDuplicatesTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NoDuplicatesTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.NoDuplicatesTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.NoisyLabelsTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      NoisyLabelsTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NoisyLabelsTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.NoisyLabelsTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.SameSchemaTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      SameSchemaTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SameSchemaTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.SameSchemaTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.SampleLeakingTest" class="md-nav__link">
+    <span class="md-ellipsis">
+      SampleLeakingTest
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SampleLeakingTest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mercury.robust.data_tests.SampleLeakingTest.run" class="md-nav__link">
+    <span class="md-ellipsis">
+      run
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="data-tests">Data Tests</h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h2 id="mercury.robust.data_tests" class="doc doc-heading">
+            <code>mercury.robust.data_tests</code>
+
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="mercury.robust.data_tests.CohortPerformanceTest" class="doc doc-heading">
+              <code class=" language-python"><span class="n">CohortPerformanceTest</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">group_col</span><span class="p">,</span> <span class="n">eval_fn</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">compare_max_diff</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">threshold_is_percentage</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="mercury.robust.basetests.RobustDataTest">RobustDataTest</span></code></p>
+
+
+        <p>This test looks if some metric performs poorly for some cohort of your data when compared with other groups.
+The computed metric is specified with the argument <code>eval_group_fn</code>, which the user needs to define (see example).
+The metric is computed for all the groups of the variable specified with the variable <code>group_col</code>.
+When the argument <code>compare_max_diff</code> is True, then the comparison is between the group which has the maximum
+metric and the group which has the minimum metric. If the difference is higher than the specified threshold
+then the test will fail. When the argument <code>compare_max_diff</code> is False, then the metric calculated for each
+group is compared against the mean of the whole dataset. If the difference of any of the groups with the mean
+is higher than the threshold, then the test will fail.
+The argument <code>threshold_is_percentage</code> controls if the threshold is compared with the absolute value of the
+difference (<code>threshold_is_percentage=False</code>), or if is compared with the percentage of the difference
+(<code>threshold_is_percentage=True</code>).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>base_dataset</code>
+            </td>
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dataset which will be evaluated. It must contain the specified <code>group_col</code>
+and the necessary columns to calculate the metric defined in <code>eval_group_fn</code></p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>group_col</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>column name which contains the groups to be evaluated</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>eval_fn</code>
+            </td>
+            <td>
+                  <code><span title="typing.Callable">Callable</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>evaluation function which computes the metric to evaluate. It must return a float</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>threshold</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>threshold to compare. If <code>compare_max_diff</code> is True and the difference between the
+maximum metric and minimum metric is higher than the threshold, then the test fails. If
+<code>compare_max_diff</code> is False and the difference between the mean metric of the dataset and the
+metric in any of the groups is higher than the threshold, then the test fails.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>compare_max_diff</code>
+            </td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If True, then the comparison is between the group which has the max metric and the
+group which has the min metric. If False, then the comparison is between the mean of the whole dataset
+and all the other groups. Default value is True</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>threshold_is_percentage</code>
+            </td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If True, then the comparison with the threshold is with the percentage
+of the computed differences, therefore the threshold represents the percentage.
+If False, then the comparison with the threshold is with the absolute values of the differences,
+therefore the threshold represents the absolute value. Default value is True.</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>name</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A name for the test. If not used, it will take the name of the class.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">mercury.robust.data_tests</span> <span class="kn">import</span> <span class="n">CohortPerformanceTest</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">eval_acc</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="k">return</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;y_true&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;y_pred&quot;</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test1</span> <span class="o">=</span> <span class="n">CohortPerformanceTest</span><span class="p">(</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="n">base_dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">group_col</span><span class="o">=</span><span class="s2">&quot;gender&quot;</span><span class="p">,</span> <span class="n">eval_fn</span> <span class="o">=</span> <span class="n">eval_acc</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">compare_max_diff</span><span class="o">=</span><span class="kc">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test1</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Check test result details</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test1</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div>
+</details>
+
+
+
+
+
+                  <details class="quote">
+                    <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+                    <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">850</span>
+<span class="normal">851</span>
+<span class="normal">852</span>
+<span class="normal">853</span>
+<span class="normal">854</span>
+<span class="normal">855</span>
+<span class="normal">856</span>
+<span class="normal">857</span>
+<span class="normal">858</span>
+<span class="normal">859</span>
+<span class="normal">860</span>
+<span class="normal">861</span>
+<span class="normal">862</span>
+<span class="normal">863</span>
+<span class="normal">864</span>
+<span class="normal">865</span>
+<span class="normal">866</span>
+<span class="normal">867</span>
+<span class="normal">868</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">base_dataset</span><span class="p">:</span> <span class="s2">&quot;pandas.DataFrame&quot;</span><span class="p">,</span>  <span class="c1"># noqa: F821</span>
+    <span class="n">group_col</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">eval_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">compare_max_diff</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">threshold_is_percentage</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
+<span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">group_col</span> <span class="o">=</span> <span class="n">group_col</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">eval_fn</span> <span class="o">=</span> <span class="n">eval_fn</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">compare_max_diff</span> <span class="o">=</span> <span class="n">compare_max_diff</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">threshold_is_percentage</span> <span class="o">=</span> <span class="n">threshold_is_percentage</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">metric_by_group</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+                  </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="mercury.robust.data_tests.CohortPerformanceTest.run" class="doc doc-heading">
+            <code class=" language-python"><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Runs the test.</p>
+<p>Raises FailedTestError if metric difference above the threshold is detected</p>
+
+            <details class="quote">
+              <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">905</span>
+<span class="normal">906</span>
+<span class="normal">907</span>
+<span class="normal">908</span>
+<span class="normal">909</span>
+<span class="normal">910</span>
+<span class="normal">911</span>
+<span class="normal">912</span>
+<span class="normal">913</span>
+<span class="normal">914</span>
+<span class="normal">915</span>
+<span class="normal">916</span>
+<span class="normal">917</span>
+<span class="normal">918</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs the test.</span>
+
+<span class="sd">    Raises FailedTestError if metric difference above the threshold is detected</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">metric_by_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dataset</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_col</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_fn</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">compare_max_diff</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compare_max_diff</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compare_diff_with_mean</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="mercury.robust.data_tests.DriftTest" class="doc doc-heading">
+              <code class=" language-python"><span class="n">DriftTest</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">schema_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">drift_detector_args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="mercury.robust.basetests.RobustDataTest">RobustDataTest</span></code></p>
+
+
+        <p>This test ensures the distributions of new dataset, or new batch of data, are
+not too different from a reference dataset (i.e. training data). In other words, it
+checks for no data drift between features.</p>
+<p>If drift is detected on any of the features, it will raise an Exception, crashing the test.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>base_dataset</code>
+            </td>
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dataset which will be evaluated</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>schema_ref</code>
+            </td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[str, <span title="mercury.dataschema.DataSchema">DataSchema</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Schema the base_dataset will be evaluated against. It can be either a
+        <code>DataSchema</code> object or a string. In case of the later, it must be a
+        path to a  previously serialized schema.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>drift_detector_args</code>
+            </td>
+            <td>
+                  <code>dict</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dictionary with arguments passed to the internal drift detectors:
+                HistogramDistanceDrift for continuous features and Chi2Drift for
+                the categoricals.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>name</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A name for the test. If not used, it will take the name of the class.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">mercury.dataschema</span> <span class="kn">import</span> <span class="n">DataSchema</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">schema_reference</span> <span class="o">=</span> <span class="n">DataSchema</span><span class="p">()</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">df_train</span><span class="p">)</span><span class="o">.</span><span class="n">calculate_statistics</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">mercury.robust.data_tests</span> <span class="kn">import</span> <span class="n">DriftTest</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span> <span class="o">=</span> <span class="n">DriftTest</span><span class="p">(</span><span class="n">df_inference</span><span class="p">,</span> <span class="n">schema_reference</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Check test result details</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div>
+</details>
+
+
+
+
+
+                  <details class="quote">
+                    <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+                    <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">base_dataset</span><span class="p">:</span> <span class="s2">&quot;pandas.DataFrame&quot;</span><span class="p">,</span>  <span class="c1"># noqa: F821</span>
+             <span class="n">schema_ref</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataSchema</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">drift_detector_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">schema_ref</span> <span class="o">=</span> <span class="n">schema_ref</span>
+
+    <span class="c1"># Default args for ALL detectors. Depending on the implementation, only the</span>
+    <span class="c1"># necessary ones will be used.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_detector_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">distance_metric</span><span class="o">=</span><span class="s2">&quot;hellinger&quot;</span><span class="p">,</span>
+        <span class="n">correction</span><span class="o">=</span><span class="s2">&quot;bonferroni&quot;</span><span class="p">,</span>
+        <span class="n">n_runs</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+        <span class="n">p_val</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+        <span class="n">n_permutations</span><span class="o">=</span><span class="mi">100</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">drift_detector_args</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_detector_args</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">drift_detector_args</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">schema_ref</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schema_ref</span> <span class="o">=</span> <span class="n">DataSchema</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">schema_ref</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">continuous_drift_metrics</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cat_drift_metrics</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+                  </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="mercury.robust.data_tests.DriftTest.run" class="doc doc-heading">
+            <code class=" language-python"><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Runs the test.</p>
+<p>Raises FailedTestError if any drift is detected</p>
+
+            <details class="quote">
+              <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs the test.</span>
+
+<span class="sd">    Raises FailedTestError if any drift is detected</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">mercury.monitoring.drift.histogram_distance_drift_detector</span> <span class="kn">import</span> <span class="n">HistogramDistanceDrift</span>
+    <span class="kn">from</span> <span class="nn">mercury.monitoring.drift.chi2_drift_detector</span> <span class="kn">import</span> <span class="n">Chi2Drift</span>
+
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">schema_ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_ref</span>
+
+    <span class="c1"># Test numerical features with HistogramDistance</span>
+    <span class="n">featnames</span> <span class="o">=</span> <span class="n">schema_ref</span><span class="o">.</span><span class="n">continuous_feats</span> <span class="o">+</span> <span class="n">schema_ref</span><span class="o">.</span><span class="n">discrete_feats</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">featnames</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+
+        <span class="n">src_histograms</span><span class="p">,</span> <span class="n">tgt_histograms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_features_histograms</span><span class="p">(</span><span class="n">featnames</span><span class="p">)</span>
+
+        <span class="n">detector_args</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;distance_metric&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector_args</span><span class="p">[</span><span class="s1">&#39;distance_metric&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;correction&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector_args</span><span class="p">[</span><span class="s1">&#39;correction&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;p_val&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector_args</span><span class="p">[</span><span class="s1">&#39;p_val&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;n_permutations&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector_args</span><span class="p">[</span><span class="s1">&#39;n_permutations&#39;</span><span class="p">]</span>
+        <span class="p">}</span>
+
+        <span class="n">drift_detector</span> <span class="o">=</span> <span class="n">HistogramDistanceDrift</span><span class="p">(</span>
+            <span class="n">distr_src</span><span class="o">=</span><span class="n">src_histograms</span><span class="p">,</span>
+            <span class="n">distr_target</span><span class="o">=</span><span class="n">tgt_histograms</span><span class="p">,</span>
+            <span class="n">features</span><span class="o">=</span><span class="n">featnames</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">detector_args</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">continuous_drift_metrics</span> <span class="o">=</span> <span class="n">drift_detector</span><span class="o">.</span><span class="n">calculate_drift</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">continuous_drift_metrics</span><span class="p">[</span><span class="s1">&#39;drift_detected&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">FailedTestError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test failed. Drift was detected on the following features: </span><span class="si">{</span><span class="n">drift_detector</span><span class="o">.</span><span class="n">get_drifted_features</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Test categorical feats with Chi2</span>
+    <span class="n">featnames</span> <span class="o">=</span> <span class="n">schema_ref</span><span class="o">.</span><span class="n">binary_feats</span> <span class="o">+</span> <span class="n">schema_ref</span><span class="o">.</span><span class="n">categorical_feats</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">featnames</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+
+        <span class="n">src_histograms</span><span class="p">,</span> <span class="n">tgt_histograms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_features_histograms</span><span class="p">(</span><span class="n">featnames</span><span class="p">)</span>
+
+        <span class="n">chi2_args</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;correction&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector_args</span><span class="p">[</span><span class="s1">&#39;correction&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;p_val&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector_args</span><span class="p">[</span><span class="s1">&#39;p_val&#39;</span><span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="n">drift_detector</span> <span class="o">=</span> <span class="n">Chi2Drift</span><span class="p">(</span>
+            <span class="n">distr_src</span><span class="o">=</span><span class="n">src_histograms</span><span class="p">,</span>
+            <span class="n">distr_target</span><span class="o">=</span><span class="n">tgt_histograms</span><span class="p">,</span>
+            <span class="n">features</span><span class="o">=</span><span class="n">featnames</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">chi2_args</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cat_drift_metrics</span> <span class="o">=</span> <span class="n">drift_detector</span><span class="o">.</span><span class="n">calculate_drift</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_drift_metrics</span><span class="p">[</span><span class="s1">&#39;drift_detected&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">FailedTestError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test failed. Drift was detected on the following features: </span><span class="si">{</span><span class="n">drift_detector</span><span class="o">.</span><span class="n">get_drifted_features</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="mercury.robust.data_tests.LabelLeakingTest" class="doc doc-heading">
+              <code class=" language-python"><span class="n">LabelLeakingTest</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">label_name</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_feats</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">schema_custom_feature_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataset_schema</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">handle_str_cols</span><span class="o">=</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="mercury.robust.basetests.RobustDataTest">RobustDataTest</span></code></p>
+
+
+        <p>This test ensures the target variable is not being leaked into the predictors
+(i.e. no feature has a strong relationship with the target). For this, it
+uses the TreeSelector class which tries to predict the
+target variable given each one of the features. If, given a particular feature, the
+target is easily predicted, it means that feature is very important. By default,
+performance is measured by ROC-AUC for classification problems and R^2 for regression.</p>
+<p>After the test has been executed, two attributes are made available for further inspection.</p>
+<div class="codehilite"><pre><span></span><code><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n n-Quoted">`importances_`</span><span class="o">:</span><span class="w"> </span><span class="n">dictionary</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">feature</span><span class="w"> </span><span class="n">importances</span><span class="p">.</span><span class="w"> </span><span class="n">That</span><span class="w"> </span><span class="k">is</span><span class="p">,</span>
+<span class="w">   </span><span class="n">the</span><span class="w"> </span><span class="n">closer</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">feature</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="n">ideal</span><span class="w"> </span><span class="k">value</span><span class="p">),</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">most</span><span class="w"> </span><span class="n">important</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="k">is</span><span class="p">.</span><span class="w"> </span><span class="k">If</span><span class="w"> </span><span class="k">any</span>
+<span class="w">   </span><span class="n">feature</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">threshold</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">fail</span><span class="p">.</span>
+<span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n n-Quoted">`_selector`</span><span class="o">:</span><span class="w"> </span><span class="n">Fitted</span><span class="w"> </span><span class="n">TreeSelector</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">test</span><span class="p">.</span>
+</code></pre></div>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>base_dataset</code>
+            </td>
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dataset which will be evaluated. Features must be numerical (i.e. no strings/objects)</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>label_name</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>column which represent the target label. If it's multi-categorical, it
+        must be label-encoded.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>task</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Task of the dataset. It must be either 'classification' or 'regression'. If None provided
+  it will be auto inferred from the <code>label_name</code> column.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>threshold</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Custom threshold which will be used when considering a particular feature important.
+       If the obtained score for a feature &lt; threshold, it will be considered "too important", and, thus,
+       the test will fail.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>metric</code>
+            </td>
+            <td>
+                  <code><span title="typing.Callable">Callable</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Metric to be used by the internal TreeSelector. If None, ROC AUC will be used for classification and
+    R2 for regression.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>ignore_feats</code>
+            </td>
+            <td>
+                  <code><span title="typing.List">List</span>[str]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Features which will be not tested.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>schema_custom_feature_map</code>
+            </td>
+            <td>
+                  <code><span title="typing.Dict">Dict</span>[str, <span title="mercury.dataschema.feature.FeatType">FeatType</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Internally, this test generates a DataSchema object. In case you find it makes
+                       wrong feature type assignations to your features you can pass here a dictionary which
+                       specify the feature type of the columns you want to fix. (See DataSchema. <code>force_types</code>
+                       parameter for more info on this).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dataset_schema</code>
+            </td>
+            <td>
+                  <code><span title="mercury.dataschema.DataSchema">DataSchema</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pre built schema. This argument is complementary to <code>schema_custom_feature_map</code>. In case you want to
+            manually build your own DataSchema object, you can pass it here and the test will internally use it
+            instead of the default, automatically built. If you provide this parameter, <code>schema_custom_feature_map</code>
+            will not be used.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>handle_str_cols</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>if the dataset contains string columns, this parameter indicates how to handle them. If 'error'
+then a ValueError exception is raised if the dataset contains string columns. If 'transform' the string columns
+are transformed to integer using a LabelEncoder. Default value is 'error'</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;error&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>name</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A name for the test. If not used, it will take the name of the class.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">mercury.robust.data_tests</span> <span class="kn">import</span> <span class="n">LabelLeakingTest</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span> <span class="o">=</span> <span class="n">LabelLeakingTest</span><span class="p">(</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="n">train_df</span><span class="p">,</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="n">label_name</span> <span class="o">=</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="n">task</span> <span class="o">=</span> <span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Check test result details</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div>
+</details>
+
+
+
+
+
+                  <details class="quote">
+                    <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+                    <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">439</span>
+<span class="normal">440</span>
+<span class="normal">441</span>
+<span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span>
+<span class="normal">445</span>
+<span class="normal">446</span>
+<span class="normal">447</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span>
+<span class="normal">452</span>
+<span class="normal">453</span>
+<span class="normal">454</span>
+<span class="normal">455</span>
+<span class="normal">456</span>
+<span class="normal">457</span>
+<span class="normal">458</span>
+<span class="normal">459</span>
+<span class="normal">460</span>
+<span class="normal">461</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">base_dataset</span><span class="p">:</span> <span class="s2">&quot;pandas.DataFrame&quot;</span><span class="p">,</span>  <span class="c1"># noqa: F821</span>
+             <span class="n">label_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+             <span class="n">task</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">metric</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">ignore_feats</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">schema_custom_feature_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FeatType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">dataset_schema</span><span class="p">:</span> <span class="n">DataSchema</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">handle_str_cols</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
+             <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">label_name</span> <span class="o">=</span> <span class="n">label_name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">task</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ignore_feats</span> <span class="o">=</span> <span class="n">ignore_feats</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">metric</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">importances_</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_schema_custom_feature_map</span> <span class="o">=</span> <span class="n">schema_custom_feature_map</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_base_schema</span> <span class="o">=</span> <span class="n">dataset_schema</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">handle_str_cols</span> <span class="o">=</span> <span class="n">handle_str_cols</span>
+</code></pre></div></td></tr></table></div>
+                  </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="mercury.robust.data_tests.LabelLeakingTest.run" class="doc doc-heading">
+            <code class=" language-python"><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Runs the test.</p>
+<p>Raises FailedTestError if any of the checks fail.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">469</span>
+<span class="normal">470</span>
+<span class="normal">471</span>
+<span class="normal">472</span>
+<span class="normal">473</span>
+<span class="normal">474</span>
+<span class="normal">475</span>
+<span class="normal">476</span>
+<span class="normal">477</span>
+<span class="normal">478</span>
+<span class="normal">479</span>
+<span class="normal">480</span>
+<span class="normal">481</span>
+<span class="normal">482</span>
+<span class="normal">483</span>
+<span class="normal">484</span>
+<span class="normal">485</span>
+<span class="normal">486</span>
+<span class="normal">487</span>
+<span class="normal">488</span>
+<span class="normal">489</span>
+<span class="normal">490</span>
+<span class="normal">491</span>
+<span class="normal">492</span>
+<span class="normal">493</span>
+<span class="normal">494</span>
+<span class="normal">495</span>
+<span class="normal">496</span>
+<span class="normal">497</span>
+<span class="normal">498</span>
+<span class="normal">499</span>
+<span class="normal">500</span>
+<span class="normal">501</span>
+<span class="normal">502</span>
+<span class="normal">503</span>
+<span class="normal">504</span>
+<span class="normal">505</span>
+<span class="normal">506</span>
+<span class="normal">507</span>
+<span class="normal">508</span>
+<span class="normal">509</span>
+<span class="normal">510</span>
+<span class="normal">511</span>
+<span class="normal">512</span>
+<span class="normal">513</span>
+<span class="normal">514</span>
+<span class="normal">515</span>
+<span class="normal">516</span>
+<span class="normal">517</span>
+<span class="normal">518</span>
+<span class="normal">519</span>
+<span class="normal">520</span>
+<span class="normal">521</span>
+<span class="normal">522</span>
+<span class="normal">523</span>
+<span class="normal">524</span>
+<span class="normal">525</span>
+<span class="normal">526</span>
+<span class="normal">527</span>
+<span class="normal">528</span>
+<span class="normal">529</span>
+<span class="normal">530</span>
+<span class="normal">531</span>
+<span class="normal">532</span>
+<span class="normal">533</span>
+<span class="normal">534</span>
+<span class="normal">535</span>
+<span class="normal">536</span>
+<span class="normal">537</span>
+<span class="normal">538</span>
+<span class="normal">539</span>
+<span class="normal">540</span>
+<span class="normal">541</span>
+<span class="normal">542</span>
+<span class="normal">543</span>
+<span class="normal">544</span>
+<span class="normal">545</span>
+<span class="normal">546</span>
+<span class="normal">547</span>
+<span class="normal">548</span>
+<span class="normal">549</span>
+<span class="normal">550</span>
+<span class="normal">551</span>
+<span class="normal">552</span>
+<span class="normal">553</span>
+<span class="normal">554</span>
+<span class="normal">555</span>
+<span class="normal">556</span>
+<span class="normal">557</span>
+<span class="normal">558</span>
+<span class="normal">559</span>
+<span class="normal">560</span>
+<span class="normal">561</span>
+<span class="normal">562</span>
+<span class="normal">563</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs the test.</span>
+
+<span class="sd">    Raises FailedTestError if any of the checks fail.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">._treeselector</span> <span class="kn">import</span> <span class="n">TreeSelector</span>
+    <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">roc_auc_score</span>
+
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">base_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dataset</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_feats</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">base_dataset</span> <span class="o">=</span> <span class="n">base_dataset</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">base_dataset</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_feats</span><span class="p">]]</span>
+
+    <span class="n">label_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_name</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span>
+    <span class="n">metric</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_schema</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">schema</span> <span class="o">=</span> <span class="n">DataSchema</span><span class="p">()</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">force_types</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_schema_custom_feature_map</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_schema</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">label_name</span> <span class="ow">in</span> <span class="n">schema</span><span class="o">.</span><span class="n">binary_feats</span> <span class="ow">or</span> <span class="n">label_name</span> <span class="ow">in</span> <span class="n">schema</span><span class="o">.</span><span class="n">categorical_feats</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="s1">&#39;classification&#39;</span>
+        <span class="k">if</span> <span class="n">label_name</span> <span class="ow">in</span> <span class="n">schema</span><span class="o">.</span><span class="n">discrete_feats</span> <span class="ow">or</span> <span class="n">label_name</span> <span class="ow">in</span> <span class="n">schema</span><span class="o">.</span><span class="n">continuous_feats</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="s1">&#39;regression&#39;</span>
+
+    <span class="n">task</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span>
+
+    <span class="k">if</span> <span class="n">task</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;classification&#39;</span><span class="p">,</span> <span class="s1">&#39;regression&#39;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error. &#39;task&#39; must be either classification or regression&quot;</span><span class="p">)</span>
+
+    <span class="c1"># This threshold has been found to be working well in most tested cases for</span>
+    <span class="c1"># R2 and AUC.</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.05</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">threshold</span> <span class="k">else</span> <span class="n">threshold</span>
+    <span class="k">if</span> <span class="n">task</span> <span class="o">==</span> <span class="s1">&#39;classification&#39;</span><span class="p">:</span>
+        <span class="n">metric</span> <span class="o">=</span> <span class="n">roc_auc_score</span> <span class="k">if</span> <span class="n">metric</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">metric</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">metric</span> <span class="o">=</span> <span class="n">r2_score</span> <span class="k">if</span> <span class="n">metric</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">metric</span>
+
+    <span class="c1"># The TreeSelector used later doesn&#39;t support string columns. Raise error or transform them</span>
+    <span class="n">str_cols</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">get_features_by_type</span><span class="p">(</span><span class="n">datatype</span><span class="o">=</span><span class="n">DataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_cols</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_str_cols</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;error&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;String column found. Set &#39;handle_str_cols&#39; parameter to &#39;transform&#39; to automatically transform &quot;</span>
+                <span class="s2">&quot;string columns to integers or transform them before using this test.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_str_cols</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;transform&#39;</span><span class="p">:</span>
+            <span class="c1"># We need to create a copy in this case to avoid to modify the original dataset</span>
+            <span class="n">base_dataset</span> <span class="o">=</span> <span class="n">base_dataset</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">str_cols</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">base_dataset</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                    <span class="n">base_dataset</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">base_dataset</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">col</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong value for &#39;handle_str_cols&#39; parameter. Set to &#39;error&#39; or &#39;transform&#39;&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Separate features from target</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">base_dataset</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">base_dataset</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">f</span> <span class="o">!=</span> <span class="n">label_name</span><span class="p">]]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">base_dataset</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">label_name</span><span class="p">]</span>
+
+    <span class="n">selector</span> <span class="o">=</span> <span class="n">TreeSelector</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span>
+    <span class="n">selector</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># Store selector for inspection. Mainly debugging purposes</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_selector</span> <span class="o">=</span> <span class="n">selector</span>
+
+    <span class="c1"># We calculate our &quot;importance&quot; scores depending on whether we have a</span>
+    <span class="c1"># classification or regression dataset.</span>
+    <span class="n">importances</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">feature_importances</span>
+
+    <span class="c1"># By default,  we ensure the best performing feature (i.e.</span>
+    <span class="c1"># the one with highest metric) is not too close to one (the best</span>
+    <span class="c1"># possible value for classification and regression / AUC or R^2).</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">importances</span><span class="p">[</span><span class="s1">&#39;metrics&#39;</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">high_importance_feats</span> <span class="o">=</span> <span class="n">metrics</span> <span class="o">&lt;</span> <span class="n">threshold</span>
+
+    <span class="c1"># Store computed importances for post-analysis</span>
+    <span class="n">ids</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">selector</span><span class="o">.</span><span class="n">feature_importances</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">importances_</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">importances_</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">metrics</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># Recover original metric instead of its inverse</span>
+
+    <span class="c1"># If any of the features is too important the test fails.</span>
+    <span class="k">if</span> <span class="n">high_importance_feats</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="n">idxs</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">feature_importances</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">][</span><span class="n">high_importance_feats</span><span class="p">]</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">idxs</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">raise</span> <span class="n">FailedTestError</span><span class="p">((</span>
+            <span class="sa">f</span><span class="s2">&quot;Test failed because high importance features were detected: </span><span class="si">{</span><span class="n">names</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="s2">&quot;Check for possible target leaking.&quot;</span>
+        <span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="mercury.robust.data_tests.LinearCombinationsTest" class="doc doc-heading">
+              <code class=" language-python"><span class="n">LinearCombinationsTest</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">schema_custom_feature_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataset_schema</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="mercury.robust.basetests.RobustDataTest">RobustDataTest</span></code></p>
+
+
+        <p>This test ensures a certain dataset doesn't have any linear combination between
+its numerical columns and no categorical variable is redundant. See the following functions if you want to know further details:</p>
+<ul>
+<li>For numerical features: _lin_combs_in_columns.lin_combs_in_columns</li>
+<li>For categorical features: _CategoryStruct.individually_redundant</li>
+</ul>
+<p>In case any combination or redundancy is detected, the test fails.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>base_dataset</code>
+            </td>
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dataset which will be evaluated</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>schema_custom_feature_map</code>
+            </td>
+            <td>
+                  <code><span title="typing.Dict">Dict</span>[str, <span title="mercury.dataschema.feature.FeatType">FeatType</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Internally, this test generates a DataSchema object. In case you find it makes
+                       wrong feature type assignations to your features you can pass here a dictionary which
+                       specify the feature type of the columns you want to fix. (See DataSchema. <code>force_types</code>
+                       parameter for more info on this).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dataset_schema</code>
+            </td>
+            <td>
+                  <code><span title="mercury.dataschema.DataSchema">DataSchema</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pre built schema. This argument is complementary to <code>schema_custom_feature_map</code>. In case you want to
+            manually build your own DataSchema object, you can pass it here and the test will internally use it
+            instead of the default, automatically built. If you provide this parameter, <code>schema_custom_feature_map</code>
+            will not be used.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>name</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A name for the test. If not used, it will take the name of the class.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">mercury.robust.data_tests</span> <span class="kn">import</span> <span class="n">LinearCombinationsTest</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span> <span class="o">=</span> <span class="n">LinearCombinationsTest</span><span class="p">(</span><span class="n">df_train</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre></div>
+</details>
+
+
+
+
+
+                  <details class="quote">
+                    <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+                    <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">base_dataset</span><span class="p">:</span> <span class="s2">&quot;pandas.DataFrame&quot;</span><span class="p">,</span>  <span class="c1"># noqa: F821</span>
+             <span class="n">schema_custom_feature_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FeatType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">dataset_schema</span><span class="p">:</span> <span class="n">DataSchema</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_schema_custom_feature_map</span> <span class="o">=</span> <span class="n">schema_custom_feature_map</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_dataset_schema</span> <span class="o">=</span> <span class="n">dataset_schema</span>
+</code></pre></div></td></tr></table></div>
+                  </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="mercury.robust.data_tests.LinearCombinationsTest.run" class="doc doc-heading">
+            <code class=" language-python"><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Runs the test.</p>
+<p>Raises FailedTestError if any of the checks fail.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs the test.</span>
+
+<span class="sd">    Raises FailedTestError if any of the checks fail.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">._linalg</span> <span class="kn">import</span> <span class="n">lin_combs_in_columns</span>
+    <span class="kn">from</span> <span class="nn">._category_struct</span> <span class="kn">import</span> <span class="n">CategoryStruct</span>
+
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset_schema</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">current_schema</span> <span class="o">=</span> <span class="n">DataSchema</span><span class="p">()</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">force_types</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_schema_custom_feature_map</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">current_schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset_schema</span>
+
+    <span class="n">lin_combinations</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">numeric_feats</span> <span class="o">=</span> <span class="n">current_schema</span><span class="o">.</span><span class="n">continuous_feats</span> <span class="o">+</span> <span class="n">current_schema</span><span class="o">.</span><span class="n">discrete_feats</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">numeric_feats</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">cont_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dataset</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">numeric_feats</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+        <span class="n">lin_combinations</span> <span class="o">=</span> <span class="n">lin_combs_in_columns</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">cont_cols</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cont_cols</span><span class="p">)</span>  <span class="c1"># Compress original matrix</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">lin_combinations</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Create message with the linear combinations found</span>
+        <span class="n">lin_combinations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">lin_combinations</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">lin_combs_found</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lin_combinations</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">lin_comb_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">lin_combinations</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">lin_comb_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dataset</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">numeric_feats</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">lin_comb_idx</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">lin_combs_found</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lin_comb_cols</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">FailedTestError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test failed. Linear combinations for continuous features were encountered: </span><span class="si">{</span><span class="n">lin_combs_found</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+    <span class="n">individually_redundant</span> <span class="o">=</span> <span class="n">CategoryStruct</span><span class="o">.</span><span class="n">individually_redundant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">current_schema</span><span class="o">.</span><span class="n">categorical_feats</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">individually_redundant</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">FailedTestError</span><span class="p">((</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Test failed. Any of these categorical variables is redundant: </span><span class="si">{</span><span class="n">individually_redundant</span><span class="si">}</span><span class="s2">. &quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Try deleting any of them.&quot;&quot;&quot;</span>
+        <span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="mercury.robust.data_tests.NoDuplicatesTest" class="doc doc-heading">
+              <code class=" language-python"><span class="n">NoDuplicatesTest</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">ignore_feats</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_hash</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="mercury.robust.basetests.RobustDataTest">RobustDataTest</span></code></p>
+
+
+        <p>This test checks no duplicated samples are present in a dataframe. In case of
+having duplicated samples it could bias your model and/or evaluation metrics.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>dataset</code>
+            </td>
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dataset in which duplicates will be looked for.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>ignore_feats</code>
+            </td>
+            <td>
+                  <code><span title="typing.List">List</span>[str]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List of columns that will be ignored when evaluating whether two samples are equal or not</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>use_hash</code>
+            </td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If True, it will create a hash for the rows in the dataframes in order to find duplicates. If False
+it will use <code>duplicate()</code> pandas method. Using hash usually results in faster execution in bigger datasets. If
+None it will use one method or other depending of the available memory</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>name</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A name for the test. If not used, it will take the name of the class.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">mercury.robust.data_tests</span> <span class="kn">import</span> <span class="n">NoDuplicatesTest</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span> <span class="o">=</span> <span class="n">NoDuplicatesTest</span><span class="p">(</span><span class="n">mydataframe</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Check test result details</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div>
+</details>
+
+
+
+
+
+                  <details class="quote">
+                    <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+                    <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1082</span>
+<span class="normal">1083</span>
+<span class="normal">1084</span>
+<span class="normal">1085</span>
+<span class="normal">1086</span>
+<span class="normal">1087</span>
+<span class="normal">1088</span>
+<span class="normal">1089</span>
+<span class="normal">1090</span>
+<span class="normal">1091</span>
+<span class="normal">1092</span>
+<span class="normal">1093</span>
+<span class="normal">1094</span>
+<span class="normal">1095</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">dataset</span><span class="p">:</span> <span class="s2">&quot;pandas.DataFrame&quot;</span><span class="p">,</span>  <span class="c1"># noqa: F821</span>
+    <span class="n">ignore_feats</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">use_hash</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
+<span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ignore_feats</span> <span class="o">=</span> <span class="n">ignore_feats</span> <span class="k">if</span> <span class="n">ignore_feats</span> <span class="k">else</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">use_hash</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">use_hash</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">virtual_memory</span><span class="p">()</span><span class="o">.</span><span class="n">percent</span> <span class="o">&gt;</span> <span class="mf">50.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">use_hash</span> <span class="o">=</span> <span class="n">use_hash</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_num_duplicates</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+                  </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="mercury.robust.data_tests.NoDuplicatesTest.run" class="doc doc-heading">
+            <code class=" language-python"><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Runs the test.</p>
+<p>Raises FailedTestError if there exist duplicated samples in the provided dataframe</p>
+
+            <details class="quote">
+              <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1106</span>
+<span class="normal">1107</span>
+<span class="normal">1108</span>
+<span class="normal">1109</span>
+<span class="normal">1110</span>
+<span class="normal">1111</span>
+<span class="normal">1112</span>
+<span class="normal">1113</span>
+<span class="normal">1114</span>
+<span class="normal">1115</span>
+<span class="normal">1116</span>
+<span class="normal">1117</span>
+<span class="normal">1118</span>
+<span class="normal">1119</span>
+<span class="normal">1120</span>
+<span class="normal">1121</span>
+<span class="normal">1122</span>
+<span class="normal">1123</span>
+<span class="normal">1124</span>
+<span class="normal">1125</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs the test.</span>
+
+<span class="sd">    Raises FailedTestError if there exist duplicated samples in the provided dataframe</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dataset</span><span class="p">[[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dataset</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_feats</span><span class="p">]]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_hash</span><span class="p">:</span>
+        <span class="n">duplicates</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">hashes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">hash_pandas_object</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">duplicates</span> <span class="o">=</span> <span class="n">hashes</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_num_duplicates</span> <span class="o">=</span> <span class="n">duplicates</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_index_duplicates</span> <span class="o">=</span> <span class="n">duplicates</span><span class="p">[</span><span class="n">duplicates</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_duplicates</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">FailedTestError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Your dataset has </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_duplicates</span><span class="si">}</span><span class="s2"> duplicates. Drop or inspect them via the `info` method&quot;</span>
+        <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="mercury.robust.data_tests.NoisyLabelsTest" class="doc doc-heading">
+              <code class=" language-python"><span class="n">NoisyLabelsTest</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">label_name</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">preprocessor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_feats</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">calculate_idx_issues</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label_issues_args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">schema_custom_feature_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataset_schema</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="mercury.robust.basetests.RobustDataTest">RobustDataTest</span></code></p>
+
+
+        <p>This test looks if the labels of a dataset contain a high level of noise. Internally, it uses the cleanlab
+library to obtain those samples in the dataset where the labels are considered as noisy. Noisy labels can happen because
+the sample is incorrectly labelled, because the sample could belong to several label categories, or some other reason.
+If the percentage of samples with noisy labels is higher than a specified threshold, then the test fails.
+It can be used with tabular datasets and with text datasets. In the case of a text dataset, the argument <code>text_col</code> must
+be specified.
+This test only works for classification tasks.</p>
+<p>After the test has been executed, two attributes are made available for further inspection.</p>
+<div class="codehilite"><pre><span></span><code><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n n-Quoted">`idx_issues_`</span><span class="o">:</span><span class="w"> </span><span class="n">indices</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">labels</span><span class="w"> </span><span class="n">detected</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">issues</span><span class="w"> </span><span class="p">(</span><span class="k">only</span><span class="w"> </span><span class="n">available</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="n n-Quoted">`calculate_idx_issues`</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="no">True</span><span class="p">)</span>
+<span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n n-Quoted">`rate_issues_`</span><span class="o">:</span><span class="w"> </span><span class="n">percentage</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">labels</span><span class="w"> </span><span class="n">detected</span><span class="w"> </span><span class="n">containing</span><span class="w"> </span><span class="n">possible</span><span class="w"> </span><span class="n">issues</span><span class="p">.</span>
+</code></pre></div>
+
+<p>IMPORTANT: If the Test reports convergence problems or it takes too long, then you can change the model used in the
+algorithm (see example below). Sometimes, the default Logistic Regression used might not converge in some datasets.
+In those cases, changing the solver is usually enough to solve the problem.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>base_dataset</code>
+            </td>
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dataset which will be evaluated.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>label_name</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>column which represents the target label.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>threshold</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>threshold to specify the percentage of noisy labels from which the test will fail. Default value is 0.4</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>text_col</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>column containing the text. Only has to be specified when using a text dataset.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>preprocessor</code>
+            </td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[TransformerMixin, BaseEstimator]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Optional preprocessor for the features. If not specified, it will
+create a preprocessor with OneHotEncoder to encode categorical features in case of tabular data
+(text_col not specified) or a CountVectorizer to encode text in case of a text dataset(text_col specified)</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>ignore_feats</code>
+            </td>
+            <td>
+                  <code><span title="typing.List">List</span>[str]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>features that will not be used in the algorithm to detect noisy labels.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>calculate_idx_issues</code>
+            </td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>whether to calculate also the index of samples with label issues. If True, the idx will be
+available in <code>idx_issues_</code> attribute. Default value is True.</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>label_issues_args</code>
+            </td>
+            <td>
+                  <code>dict</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>arguments for the algorithm to detect noisy labels. You can check documentation from
+<code>_label_cleaning.get_label_issues</code> to see all available arguments.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>schema_custom_feature_map</code>
+            </td>
+            <td>
+                  <code><span title="typing.Dict">Dict</span>[str, <span title="mercury.dataschema.feature.FeatType">FeatType</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Internally, this test generates a DataSchema object. In case you find it makes
+                       wrong feature type assignations to your features you can pass here a dictionary which
+                       specify the feature type of the columns you want to fix. (See DataSchema. <code>force_types</code>
+                       parameter for more info on this).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dataset_schema</code>
+            </td>
+            <td>
+                  <code><span title="mercury.dataschema.DataSchema">DataSchema</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pre built schema. This argument is complementary to <code>schema_custom_feature_map</code>. In case you want to
+            manually build your own DataSchema object, you can pass it here and the test will internally use it
+            instead of the default, automatically built. If you provide this parameter, <code>schema_custom_feature_map</code>
+            will not be used.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>name</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A name for the test. If not used, it will take the name of the class.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">mercury.robust.data_tests</span> <span class="kn">import</span> <span class="n">NoisyLabelsTest</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span> <span class="o">=</span> <span class="n">NoisyLabelsTest</span><span class="p">(</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="n">base_dataset</span><span class="o">=</span><span class="n">train_df</span><span class="p">,</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="n">label_name</span><span class="o">=</span><span class="s2">&quot;label_col&quot;</span><span class="p">,</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="n">text_col</span> <span class="o">=</span> <span class="s2">&quot;text_col,</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="n">label_issues_args</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;clf&quot;</span><span class="p">:</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;sag&#39;</span><span class="p">)}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Percentage of samples with possible label issues</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">rate_issues_</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Access to samples with possible label issues</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">train_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test</span><span class="o">.</span><span class="n">idx_issues_</span><span class="p">]</span>
+</code></pre></div>
+</details>
+
+
+
+
+
+                  <details class="quote">
+                    <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+                    <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">626</span>
+<span class="normal">627</span>
+<span class="normal">628</span>
+<span class="normal">629</span>
+<span class="normal">630</span>
+<span class="normal">631</span>
+<span class="normal">632</span>
+<span class="normal">633</span>
+<span class="normal">634</span>
+<span class="normal">635</span>
+<span class="normal">636</span>
+<span class="normal">637</span>
+<span class="normal">638</span>
+<span class="normal">639</span>
+<span class="normal">640</span>
+<span class="normal">641</span>
+<span class="normal">642</span>
+<span class="normal">643</span>
+<span class="normal">644</span>
+<span class="normal">645</span>
+<span class="normal">646</span>
+<span class="normal">647</span>
+<span class="normal">648</span>
+<span class="normal">649</span>
+<span class="normal">650</span>
+<span class="normal">651</span>
+<span class="normal">652</span>
+<span class="normal">653</span>
+<span class="normal">654</span>
+<span class="normal">655</span>
+<span class="normal">656</span>
+<span class="normal">657</span>
+<span class="normal">658</span>
+<span class="normal">659</span>
+<span class="normal">660</span>
+<span class="normal">661</span>
+<span class="normal">662</span>
+<span class="normal">663</span>
+<span class="normal">664</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">base_dataset</span><span class="p">:</span> <span class="s2">&quot;pandas.DataFrame&quot;</span><span class="p">,</span>  <span class="c1"># noqa: F821</span>
+             <span class="n">label_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+             <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">text_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">preprocessor</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;TransformerMixin&quot;</span><span class="p">,</span> <span class="s2">&quot;BaseEstimator&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># noqa: F821</span>
+             <span class="n">ignore_feats</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">calculate_idx_issues</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+             <span class="n">label_issues_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">schema_custom_feature_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FeatType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">dataset_schema</span><span class="p">:</span> <span class="n">DataSchema</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">label_name</span> <span class="o">=</span> <span class="n">label_name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">threshold</span> <span class="k">else</span> <span class="n">threshold</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">preprocessor</span> <span class="o">=</span> <span class="n">preprocessor</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">text_col</span> <span class="o">=</span> <span class="n">text_col</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ignore_feats</span> <span class="o">=</span> <span class="n">ignore_feats</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">calculate_idx_issues</span> <span class="o">=</span> <span class="n">calculate_idx_issues</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rate_issues_</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_schema_custom_feature_map</span> <span class="o">=</span> <span class="n">schema_custom_feature_map</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_dataset_schema</span> <span class="o">=</span> <span class="n">dataset_schema</span>
+
+    <span class="c1"># Default args for function to get label issues</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">label_issues_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">clf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_folds</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">frac_noise</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">num_to_remove_per_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">prune_method</span><span class="o">=</span><span class="s1">&#39;prune_by_noise_rate&#39;</span><span class="p">,</span>
+        <span class="n">sorted_index_method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">label_issues_args</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_issues_args</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">label_issues_args</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+                  </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="mercury.robust.data_tests.NoisyLabelsTest.run" class="doc doc-heading">
+            <code class=" language-python"><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Runs the test.</p>
+<p>Raises FailedTestError if noise above threshold is detected</p>
+
+            <details class="quote">
+              <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">746</span>
+<span class="normal">747</span>
+<span class="normal">748</span>
+<span class="normal">749</span>
+<span class="normal">750</span>
+<span class="normal">751</span>
+<span class="normal">752</span>
+<span class="normal">753</span>
+<span class="normal">754</span>
+<span class="normal">755</span>
+<span class="normal">756</span>
+<span class="normal">757</span>
+<span class="normal">758</span>
+<span class="normal">759</span>
+<span class="normal">760</span>
+<span class="normal">761</span>
+<span class="normal">762</span>
+<span class="normal">763</span>
+<span class="normal">764</span>
+<span class="normal">765</span>
+<span class="normal">766</span>
+<span class="normal">767</span>
+<span class="normal">768</span>
+<span class="normal">769</span>
+<span class="normal">770</span>
+<span class="normal">771</span>
+<span class="normal">772</span>
+<span class="normal">773</span>
+<span class="normal">774</span>
+<span class="normal">775</span>
+<span class="normal">776</span>
+<span class="normal">777</span>
+<span class="normal">778</span>
+<span class="normal">779</span>
+<span class="normal">780</span>
+<span class="normal">781</span>
+<span class="normal">782</span>
+<span class="normal">783</span>
+<span class="normal">784</span>
+<span class="normal">785</span>
+<span class="normal">786</span>
+<span class="normal">787</span>
+<span class="normal">788</span>
+<span class="normal">789</span>
+<span class="normal">790</span>
+<span class="normal">791</span>
+<span class="normal">792</span>
+<span class="normal">793</span>
+<span class="normal">794</span>
+<span class="normal">795</span>
+<span class="normal">796</span>
+<span class="normal">797</span>
+<span class="normal">798</span>
+<span class="normal">799</span>
+<span class="normal">800</span>
+<span class="normal">801</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs the test.</span>
+
+<span class="sd">    Raises FailedTestError if noise above threshold is detected</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">._label_cleaning</span> <span class="kn">import</span> <span class="n">get_label_issues</span><span class="p">,</span> <span class="n">get_confident_joint</span>
+
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">base_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dataset</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_feats</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">base_dataset</span> <span class="o">=</span> <span class="n">base_dataset</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">base_dataset</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_feats</span><span class="p">]]</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset_schema</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">current_schema</span> <span class="o">=</span> <span class="n">DataSchema</span><span class="p">()</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">force_types</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_schema_custom_feature_map</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">current_schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset_schema</span>
+
+    <span class="c1"># Separate features from target</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">base_dataset</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">base_dataset</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">f</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_name</span><span class="p">]]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">base_dataset</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_name</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="c1"># Preprocess features</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocess_features</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">current_schema</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_idx_issues</span><span class="p">:</span>
+        <span class="c1"># Get label issues</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">idx_issues_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_label_issues</span><span class="p">(</span>
+            <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">label_issues_args</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Obtain number of label issues</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">idx_issues_</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_issues</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">idx_issues_</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_issues</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">idx_issues_</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Compute only confident joint and calculate number of issues as the sum of non-diagonal elements</span>
+        <span class="n">confident_join</span> <span class="o">=</span> <span class="n">get_confident_joint</span><span class="p">(</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_folds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">label_issues_args</span><span class="p">[</span><span class="s2">&quot;n_folds&quot;</span><span class="p">],</span> <span class="n">clf</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">label_issues_args</span><span class="p">[</span><span class="s2">&quot;clf&quot;</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">label_issues_args</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_issues</span> <span class="o">=</span> <span class="n">confident_join</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">confident_join</span><span class="p">)</span>
+
+    <span class="c1"># Calculate percentage of obtained labels with issues</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rate_issues_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_issues</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">)</span>
+
+    <span class="c1"># If percentage of issues is higher than threshold, throw exception</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate_issues_</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">FailedTestError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Test failed. High level of noise detected in labels. Percentage of labels with noise: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rate_issues_</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="mercury.robust.data_tests.SameSchemaTest" class="doc doc-heading">
+              <code class=" language-python"><span class="n">SameSchemaTest</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">schema_ref</span><span class="p">,</span> <span class="n">custom_feature_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="mercury.robust.basetests.RobustDataTest">RobustDataTest</span></code></p>
+
+
+        <p>This test ensures a certain dataset, or new batch of samples, follows a
+previously defined schema.</p>
+<p>On the <code>run</code> call, it will make a schema validation. If something isn't right, it
+will raise an Exception, crashing the test.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>base_dataset</code>
+            </td>
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dataset which will be evaluated</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>schema_ref</code>
+            </td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[str, <span title="mercury.dataschema.DataSchema">DataSchema</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Schema the base_dataset will be evaluated against. It can be either a
+        <code>DataSchema</code> object or a string. In case of the later, it must be a
+        path to a previously serialized schema.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>custom_feature_map</code>
+            </td>
+            <td>
+                  <code><span title="typing.Dict">Dict</span>[str, <span title="mercury.dataschema.feature.FeatType">FeatType</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dictionary with <column_name: FeatType>. You can provide this in case
+                the DataSchema wrongly infers the types for the new data batch. If
+                this is None, the types will be auto inferred.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>name</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A name for the test. If not used, it will take the name of the class.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">mercury.dataschema</span> <span class="kn">import</span> <span class="n">DataSchema</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">schema_reference</span> <span class="o">=</span> <span class="n">DataSchema</span><span class="p">()</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">df_train</span><span class="p">)</span><span class="o">.</span><span class="n">calculate_statistics</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">mercury.robust.data_tests</span> <span class="kn">import</span> <span class="n">SameSchemaTest</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span> <span class="o">=</span> <span class="n">SameSchemaTest</span><span class="p">(</span><span class="n">df_inference</span><span class="p">,</span> <span class="n">schema_reference</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre></div>
+</details>
+
+
+
+
+
+                  <details class="quote">
+                    <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+                    <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">base_dataset</span><span class="p">:</span> <span class="s2">&quot;pandas.DataFrame&quot;</span><span class="p">,</span>  <span class="c1"># noqa: F821</span>
+             <span class="n">schema_ref</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataSchema</span><span class="p">],</span>
+             <span class="n">custom_feature_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FeatType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">schema_ref</span> <span class="o">=</span> <span class="n">schema_ref</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">custom_feature_map</span> <span class="o">=</span> <span class="n">custom_feature_map</span>
+
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">schema_ref</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schema_ref</span> <span class="o">=</span> <span class="n">DataSchema</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">schema_ref</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+                  </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="mercury.robust.data_tests.SameSchemaTest.run" class="doc doc-heading">
+            <code class=" language-python"><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Runs the test.</p>
+<p>Raises FailedTestError if any of the checks fail.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs the test.</span>
+
+<span class="sd">    Raises FailedTestError if any of the checks fail.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">current_schema</span> <span class="o">=</span> <span class="n">DataSchema</span><span class="p">()</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">force_types</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_feature_map</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schema_ref</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">current_schema</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">FailedTestError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="mercury.robust.data_tests.SampleLeakingTest" class="doc doc-heading">
+              <code class=" language-python"><span class="n">SampleLeakingTest</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">test_dataset</span><span class="p">,</span> <span class="n">ignore_feats</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_hash</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="mercury.robust.basetests.RobustDataTest">RobustDataTest</span></code></p>
+
+
+        <p>This test looks if there are samples in the test dataset that are identical to samples in the base/train dataset.
+It considers that a sample is the same if it contains the same values for all the columns. If the number of duplicated
+samples is higher than the allowed by the <code>threshold</code> then the test fails.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>base_dataset</code>
+            </td>
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Training/Base dataset.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>test_dataset</code>
+            </td>
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Test dataset that we look if we have the same samples than in the
+<code>base_dataset</code>. It must contain the same columns as the <code>base_dataset</code></p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>ignore_feats</code>
+            </td>
+            <td>
+                  <code><span title="typing.List">List</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List of the name of the columns that we want to ignore when comparing the samples</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>threshold</code>
+            </td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[float, int]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>max percentage (float) or number (int) of samples that we allowed to be duplicated.
+By default is 0</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>use_hash</code>
+            </td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If True, it will create a hash for the rows in the dataframes in order to find duplicates. If False
+it will use <code>duplicate()</code> pandas method. Using hash usually results in faster execution in bigger datasets. If
+None it will use one method or other depending of the available memory</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>name</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A name for the test. If not used, it will take the name of the class.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">mercury.robust.data_tests</span> <span class="kn">import</span> <span class="n">SampleLeakingTest</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span> <span class="o">=</span> <span class="n">SampleLeakingTest</span><span class="p">(</span><span class="n">base_dataset</span><span class="o">=</span><span class="n">my_train_dataframe</span><span class="p">,</span> <span class="n">test_dataset</span><span class="o">=</span><span class="n">my_test_dataset</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Check test result details</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div>
+</details>
+
+
+
+
+
+                  <details class="quote">
+                    <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+                    <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">949</span>
+<span class="normal">950</span>
+<span class="normal">951</span>
+<span class="normal">952</span>
+<span class="normal">953</span>
+<span class="normal">954</span>
+<span class="normal">955</span>
+<span class="normal">956</span>
+<span class="normal">957</span>
+<span class="normal">958</span>
+<span class="normal">959</span>
+<span class="normal">960</span>
+<span class="normal">961</span>
+<span class="normal">962</span>
+<span class="normal">963</span>
+<span class="normal">964</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">base_dataset</span><span class="p">:</span> <span class="s2">&quot;pandas.DataFrame&quot;</span><span class="p">,</span>  <span class="c1"># noqa: F821</span>
+    <span class="n">test_dataset</span><span class="p">:</span> <span class="s2">&quot;pandas.DataFrame&quot;</span><span class="p">,</span>  <span class="c1"># noqa: F821</span>
+    <span class="n">ignore_feats</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">threshold</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">use_hash</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
+<span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">test_dataset</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ignore_feats</span> <span class="o">=</span> <span class="n">ignore_feats</span> <span class="k">if</span> <span class="n">ignore_feats</span> <span class="k">else</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">use_hash</span> <span class="o">=</span> <span class="n">use_hash</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_is_duplicated_test</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+                  </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="mercury.robust.data_tests.SampleLeakingTest.run" class="doc doc-heading">
+            <code class=" language-python"><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Runs the test.</p>
+<p>Raises FailedTestError if samples in test set existing in train are above threshold</p>
+
+            <details class="quote">
+              <summary>Source code in <code>mercury/robust/data_tests.py</code></summary>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">976</span>
+<span class="normal">977</span>
+<span class="normal">978</span>
+<span class="normal">979</span>
+<span class="normal">980</span>
+<span class="normal">981</span>
+<span class="normal">982</span>
+<span class="normal">983</span>
+<span class="normal">984</span>
+<span class="normal">985</span>
+<span class="normal">986</span>
+<span class="normal">987</span>
+<span class="normal">988</span>
+<span class="normal">989</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs the test.</span>
+
+<span class="sd">    Raises FailedTestError if samples in test set existing in train are above threshold</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_verify_datasets</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_is_duplicated_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_sample_leaking</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_high_number_of_duplicates</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">FailedTestError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Num of samples in test set that appear in train set is </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_duplicated_test</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;(a proportion of </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_duplicated_test</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_dataset</span><span class="p">),</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> test samples )&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;and the max allowed is </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../javascripts/config.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
