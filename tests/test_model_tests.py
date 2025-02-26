@@ -667,7 +667,7 @@ def test_model_simplicity_multiclass_classification():
 
 
 def test_drift_prediction_resistance_test():
-    df = pd.read_csv("tutorials/data/credit/UCI_Credit_card.csv")
+    df = pd.read_csv("mercury/robust/tutorials/data/credit/UCI_Credit_card.csv")
 
     df = df.loc[:, df.columns != 'ID']
 
@@ -939,7 +939,7 @@ def test_drift_metric_resistance_test_regression():
     model_rf = RandomForestRegressor().fit(X, y)
 
     drift_args = {
-        'cols' : ['f0'], 
+        'cols' : ['f0'],
         'method' : 'value',
         'method_params': {'value': 99999}
     }
@@ -975,9 +975,9 @@ def test_drift_metric_resistance_test_classification():
     X = pd.DataFrame(X, columns=["f"+str(i) for i in range(X.shape[1])])
 
     model = LogisticRegression().fit(X, y)
-    
+
     drift_args_1 = {
-        'cols' : ['f0', 'f1', 'f2'], 
+        'cols' : ['f0', 'f1', 'f2'],
         'method' : 'value',
         'method_params': {'value': 1e9, 'proportion_outliers': 0.99}
     }
@@ -1015,9 +1015,9 @@ def test_drift_metric_resistance_test_invalid_inputs():
     X = pd.DataFrame(X, columns=["f"+str(i) for i in range(X.shape[1])])
 
     model = LogisticRegression().fit(X, y)
-    
+
     drift_args_1 = {
-        'cols' : ['f0', 'f1', 'f2'], 
+        'cols' : ['f0', 'f1', 'f2'],
         'method' : 'value',
         'method_params': {'value': 1e9, 'proportion_outliers': 0.99}
     }
@@ -1101,7 +1101,7 @@ def test_feature_checker_test_model_function():
                 ("classifier", DecisionTreeClassifier())
             ]
         )
-        
+
         return pipeline
 
     # Create and run test
