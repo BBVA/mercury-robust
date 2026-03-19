@@ -30,7 +30,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-  'tensorflow<2.11',
+  'tensorflow',
   'pytest',
   'flake8',
   'xgboost',
