@@ -100,7 +100,7 @@ def test_sameschema_custom_feature_map(datasets):
 
     # Same types are forced. the test runs fine
     test = SameSchemaTest(
-        titanic2, 
+        titanic2,
         schma_reference,
         custom_feature_map={
             'pclass': FeatType.DISCRETE,
@@ -194,7 +194,7 @@ def test_drift_different_domain_categoricals(datasets):
         drift_test.run()
 
 def test_drift_target_samples_outside_source_bin_limits():
-    # This is is testing the case where the target distribution in a continous variable contains samples 
+    # This is is testing the case where the target distribution in a continous variable contains samples
     # that are outside of the limits of the binning created in the source distribution
 
 
@@ -254,9 +254,7 @@ def test_label_leaking(datasets):
 
     # Label encoding
     for feat in ["sex", "smoker", "day", "time"]:
-        tips.loc[:, feat] = preprocessing.LabelEncoder().fit_transform(
-            tips.loc[:, feat]
-        )
+        tips[feat] = preprocessing.LabelEncoder().fit_transform(tips[feat].astype(str))
 
     # Categoricals need to be label encoded
     le = preprocessing.LabelEncoder()
@@ -272,7 +270,7 @@ def test_label_leaking(datasets):
     ]
     titanic = titanic.astype({f: str for f in categoricals})
     for f in categoricals:
-        titanic.loc[:, f] = le.fit_transform(titanic.loc[:, f])
+        titanic[f] = le.fit_transform(titanic[f].astype(str))
 
     # Only classification / regression possible
     with pytest.raises(ValueError) as exinfo:
