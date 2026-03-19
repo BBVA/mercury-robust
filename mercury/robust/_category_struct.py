@@ -1,5 +1,7 @@
 import numpy as np
 
+from pandas.api.types import is_string_dtype
+
 
 class CategoryStruct:
     """
@@ -30,11 +32,7 @@ class CategoryStruct:
         Returns:
             A list with the names of the columns whose type is a Python object
         """
-        return [
-            name
-            for name, type in zip(data.columns, data.dtypes)
-            if type == np.dtype("object")
-        ]
+        return [name for name, type in zip(data.columns, data.dtypes) if is_string_dtype(type)]
 
     @staticmethod
     def cardinality_set_of_rows(data, col_names):
