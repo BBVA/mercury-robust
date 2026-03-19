@@ -136,7 +136,9 @@ class ModelReproducibilityTest(RobustModelTest):
         else:
             # import tensorflow only if we need it
             import tensorflow as tf
-            if isinstance(model, (tf.keras.Model, tf.estimator.Estimator)):
+            estimator_cls = getattr(getattr(tf, "estimator", None), "Estimator", None)
+            tf_model_types = (tf.keras.Model,) if estimator_cls is None else (tf.keras.Model, estimator_cls)
+            if isinstance(model, tf_model_types):
                 return tf.keras.models.clone_model(model)
             else:
                 # Check if we have deepcopy method
