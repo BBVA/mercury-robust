@@ -375,8 +375,8 @@ class DriftTest(RobustDataTest):
             tgt_hist = tgt_hist / tgt_hist.sum()
 
         # Trick because Drift detectors don't work with densities yet
-        src_hist *= 1000
-        tgt_hist *= 1000
+        src_hist = src_hist * 1000
+        tgt_hist = tgt_hist * 1000
 
         return src_hist, tgt_hist
 
@@ -523,7 +523,7 @@ class LabelLeakingTest(RobustDataTest):
                 base_dataset = base_dataset.copy()
                 for col in str_cols:
                     if col in base_dataset.columns:
-                        base_dataset.loc[:, col] = LabelEncoder().fit_transform(base_dataset.loc[:, col])
+                        base_dataset[col] = LabelEncoder().fit_transform(base_dataset[col].astype(str))
             else:
                 raise ValueError("Wrong value for 'handle_str_cols' parameter. Set to 'error' or 'transform'")
 
@@ -910,7 +910,7 @@ class CohortPerformanceTest(RobustDataTest):
         """
         super().run(*args, **kwargs)
 
-        self.metric_by_group = self.base_dataset.groupby(self.group_col).apply(lambda x: self.eval_fn(x))
+        self.metric_by_group = self.base_dataset.groupby(self.group_col).apply(lambda x: self.eval_fn(x), include_groups=False)
 
         if self.compare_max_diff:
             self._compare_max_diff()

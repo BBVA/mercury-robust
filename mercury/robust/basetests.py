@@ -23,6 +23,9 @@ class TestState(Enum):
     EXCEPTION = 'EXCEPTION'
 
 
+TestState.__test__ = False
+
+
 class RobustTest(ABC):
     """
     Base class for the robust testing implementations. It keeps three attributes:
