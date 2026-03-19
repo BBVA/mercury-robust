@@ -3,6 +3,7 @@ import seaborn as sns
 import numpy as np
 import pandas as pd
 import warnings
+from types import SimpleNamespace
 
 from mercury.dataschema import DataSchema
 from mercury.dataschema.feature import FeatType
@@ -961,3 +962,93 @@ def test_lin_combinations_cont():
     linear_comb_test = LinearCombinationsTest(df, dataset_schema=schma_reference)
     with pytest.raises(FailedTestError, match="'f1', 'f2'"):
         linear_comb_test.run()
+
+
+def test_schema_loading_and_info_helpers(monkeypatch):
+    df = pd.DataFrame(
+        {
+            "feature": [0, 1, 0, 1, 0, 1],
+            "aux": [1, 0, 1, 0, 1, 0],
+            "target": [0, 1, 0, 1, 0, 1],
+        }
+    )
+    schema = DataSchema().generate(df, force_types={"target": FeatType.CATEGORICAL}).calculate_statistics()
+
+    monkeypatch.setattr(DataSchema, "load", staticmethod(lambda _: schema))
+
+    same_schema_test = SameSchemaTest(df, schema_ref="schema.pkl", custom_feature_map={"target": FeatType.CATEGORICAL})
+    same_schema_test.run()
+
+    drift_test = DriftTest(df[["feature", "aux"]], schema_ref="schema.pkl", drift_detector_args={"p_val": 0.5})
+    assert drift_test._detector_args["p_val"] == 0.5
+    assert drift_test.schema_ref is schema
+
+    label_test = LabelLeakingTest(
+        df,
+        label_name="target",
+        task="classification",
+        threshold=-1,
+        dataset_schema=schema,
+    )
+    assert label_test.info() is None
+    label_test.run()
+    assert "importances" in label_test.info()
+
+
+def test_noisy_labels_info_without_idx_issues(monkeypatch):
+    df = pd.DataFrame(
+        {
+            "f1": [0, 1, 0, 1, 0, 1],
+            "f2": [1, 0, 1, 0, 1, 0],
+            "label": [0, 1, 0, 1, 0, 1],
+        }
+    )
+    schema = DataSchema().generate(df, force_types={"label": FeatType.CATEGORICAL}).calculate_statistics()
+
+    monkeypatch.setattr(
+        "mercury.robust._label_cleaning.get_confident_joint",
+        lambda *args, **kwargs: np.array([[2, 1], [1, 2]]),
+    )
+
+    test = NoisyLabelsTest(
+        df,
+        label_name="label",
+        threshold=1.0,
+        calculate_idx_issues=False,
+        dataset_schema=schema,
+        preprocessor=preprocessing.FunctionTransformer(lambda x: x.values),
+        label_issues_args={"n_folds": 2},
+    )
+    assert test.info() is None
+    test.run()
+    assert test.num_issues == 2
+    assert test.info() == {"rate_issues": 2 / len(df)}
+
+
+def test_sample_leaking_info_before_run_and_hash_inference(monkeypatch):
+    train = pd.DataFrame({"a": [1, 2], "b": [3, 4]})
+    test_df = pd.DataFrame({"a": [5, 6], "b": [7, 8]})
+
+    test = SampleLeakingTest(train, test_df, use_hash=None)
+    assert test.info() is None
+
+    monkeypatch.setattr(
+        "mercury.robust.data_tests.psutil.virtual_memory",
+        lambda: SimpleNamespace(percent=10.0),
+    )
+
+    assert test._infer_use_hashing() is False
+    test.run()
+    assert test.use_hash is False
+    assert test.info()["num_duplicated"] == 0
+
+
+def test_no_duplicates_info_before_run_and_without_hash():
+    df = pd.DataFrame([[1, 2], [3, 4], [1, 2]])
+    test = NoDuplicatesTest(df, use_hash=False)
+
+    assert test.info() is None
+    with pytest.raises(FailedTestError):
+        test.run()
+
+    assert test.info()["num_duplicated"] == 1

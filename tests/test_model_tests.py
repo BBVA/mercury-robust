@@ -1150,3 +1150,154 @@ def test_feature_checker_test_model_function():
         model_fn_args = model_fn_args,
     )
     test.run()
+
+
+def test_model_reproducibility_fails_on_test_dataset_branches():
+    df_train = pd.DataFrame({"x": [0, 1, 0, 1], "y": [0, 1, 0, 1]})
+    df_test = pd.DataFrame({"x": [0, 1], "y": [0, 1]})
+
+    class DummyModel:
+        pass
+
+    def train_model(model, X, y, train_params=None):
+        return model
+
+    test = ModelReproducibilityTest(
+        model=DummyModel(),
+        train_dataset=df_train,
+        test_dataset=df_test,
+        target="y",
+        train_fn=train_model,
+        eval_fn=lambda *args, **kwargs: 1.0,
+        predict_fn=None,
+        threshold_eval=0.0,
+    )
+
+    test._clone_unfitted_model = lambda model: DummyModel()
+    eval_checks = iter([False, True])
+
+    def fake_eval_check(*args, **kwargs):
+        test.eval_1 = 1.0
+        test.eval_2 = 0.0
+        return next(eval_checks)
+
+    test._check_diff_in_eval = fake_eval_check
+
+    with pytest.raises(FailedTestError, match="test dataset"):
+        test.run()
+
+    pred_test = ModelReproducibilityTest(
+        model=DummyModel(),
+        train_dataset=df_train,
+        test_dataset=df_test,
+        target="y",
+        train_fn=train_model,
+        eval_fn=None,
+        predict_fn=lambda *args, **kwargs: np.array([0, 1]),
+        threshold_yhat=0.0,
+    )
+
+    pred_test._clone_unfitted_model = lambda model: DummyModel()
+    pred_checks = iter([False, True])
+
+    def fake_pred_check(*args, **kwargs):
+        pred_test.diff = 1.0
+        return next(pred_checks)
+
+    pred_test._check_diff_in_predictions = fake_pred_check
+
+    with pytest.raises(FailedTestError, match="test set"):
+        pred_test.run()
+
+
+def test_model_simplicity_uses_provided_schema():
+    X, y = make_classification(n_samples=80, n_features=4, random_state=0)
+    X = pd.DataFrame(X, columns=["f1", "f2", "f3", "f4"])
+    schema = DataSchema().generate(X).calculate_statistics()
+    model = LogisticRegression(max_iter=500).fit(X, y)
+
+    test = ModelSimplicityChecker(
+        model=model,
+        X_train=X,
+        y_train=y,
+        X_test=X,
+        y_test=y,
+        task="classification",
+        threshold=-1.0,
+        baseline_model=DecisionTreeClassifier(max_depth=1, random_state=0),
+        dataset_schema=schema,
+    )
+    test.run()
+    assert test.info()["metric_model"] >= 0
+
+
+def test_tree_coverage_info_and_unsupported_model():
+    X, y = make_classification(n_samples=50, n_features=4, random_state=0)
+    model = DecisionTreeClassifier(max_depth=2, random_state=0).fit(X, y)
+    test = TreeCoverageTest(model, X)
+    test.run()
+    assert "coverage" in test.info()
+
+    with pytest.raises(ValueError):
+        TreeCoverageTest(LogisticRegression().fit(X, y), X)
+
+
+def test_feature_checker_runtime_and_importance_edge_cases():
+    class CoefModel:
+        def fit(self, X, Y):
+            self.coef_ = np.array([0.2, -0.1])
+            return self
+
+        def predict(self, X):
+            return np.zeros(len(X))
+
+    class PlainModel:
+        def fit(self, X, Y):
+            return self
+
+        def predict(self, X):
+            return np.zeros(len(X))
+
+    class AttrModel:
+        custom_importance = [0.1]
+
+        def fit(self, X, Y):
+            return self
+
+        def predict(self, X):
+            return np.zeros(len(X))
+
+    class MultiCoefModel:
+        def fit(self, X, Y):
+            self.coef_ = np.array([[1.0, -2.0], [3.0, -4.0]])
+            return self
+
+        def predict(self, X):
+            return np.zeros(len(X))
+
+    df = pd.DataFrame({"a": [0, 1, 0, 1], "b": [1, 0, 1, 0], "y": [0, 1, 0, 1]})
+
+    coef_test = FeatureCheckerTest(CoefModel(), df, "y", tolerance=-1, remove_num=1, num_tries=1)
+    coef_test._fit_model(df[["a", "b"]], df["y"])
+    assert coef_test.info() == {}
+    assert coef_test._get_least_important(1) == ["b"]
+
+    missing_attr_test = FeatureCheckerTest(PlainModel(), df, "y", importance="missing_attr", tolerance=-1)
+    assert missing_attr_test._get_least_important(1) == []
+
+    attr_test = FeatureCheckerTest(AttrModel(), df, "y", importance="custom_importance", tolerance=-1)
+    assert attr_test._get_least_important(1) == []
+
+    multi_coef_test = FeatureCheckerTest(MultiCoefModel(), df, "y", tolerance=-1)
+    multi_coef_test._fit_model(df[["a", "b"]], df["y"])
+    assert multi_coef_test._get_least_important(1) == ["a"]
+
+    runtime_test = FeatureCheckerTest(PlainModel(), df, "y", tolerance=-1)
+    runtime_test._fit_model(df[["a", "b"]], df["y"])
+    with pytest.raises(RuntimeError, match="Unable to compute feature importance"):
+        runtime_test._get_least_important(3)
+
+    too_many_cols_test = FeatureCheckerTest(PlainModel(), df, "y", tolerance=-1, remove_num=2, num_tries=2)
+    too_many_cols_test._get_least_important = lambda n: ["a", "b"]
+    with pytest.raises(RuntimeError, match="Not enough columns"):
+        too_many_cols_test.run()
