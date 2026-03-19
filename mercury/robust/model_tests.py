@@ -1065,58 +1065,70 @@ class FeatureCheckerTest(RobustModelTest):
     def _get_least_important(self, N):
 
         names = []
+        importance_model = getattr(self, "fitted_model", None)
+        if importance_model is None:
+            importance_model = self.model
+        columns = self.test.columns[self.test.columns != self.target]
+
+        def _rank_columns_from_importance(importance_values):
+            ranked_names = []
+            if len(columns) != len(importance_values):
+                return ranked_names
+
+            for _, name in sorted(zip(importance_values, columns)):
+                ranked_names.append(name)
+                if len(ranked_names) == N:
+                    break
+            return ranked_names
 
         if self.importance is None:
+            importance = None
 
-            try:
-                from mercury.explainability.explainers import ShuffleImportanceExplainer
-            except:
-                raise ImportError(
-                    'Install mercury-explainability to use the FeatureCheckerTest with this type of model'
-                )
+            # Prefer native model importances when they are available.
+            if hasattr(importance_model, "feature_importances_"):
+                importance = getattr(importance_model, "feature_importances_")
+            elif hasattr(importance_model, "coef_"):
+                importance = np.asarray(getattr(importance_model, "coef_"))
+                if importance.ndim > 1:
+                    importance = np.mean(np.abs(importance), axis=0)
+                else:
+                    importance = np.abs(importance)
 
-            def model_inference_function(data, target):
-                assert target == self.target
+            if importance is not None:
+                names = _rank_columns_from_importance(importance)
+                if len(names) == N:
+                    return names
 
-                X = data.loc[:, data.columns != self.target]
-                Y = data.loc[:, self.target]
-                Yh = self.fitted_model.predict(X)
+            # Fallback to a simple permutation importance over the original features.
+            X_test = self.test.loc[:, columns]
+            Y_test = self.test.loc[:, self.target]
+            Y_hat = self.fitted_model.predict(X_test)
 
-                if self.eval is None:
-                    return sum((Y - Yh) ** 2)
+            baseline_loss = sum((Y_test - Y_hat) ** 2) if self.eval is None else self.eval(Y_test, Y_hat)
+            rng = np.random.default_rng(0)
+            permutation_importance = []
 
-                return self.eval(Y, Yh)
+            for col in columns:
+                X_permuted = X_test.copy()
+                X_permuted.loc[:, col] = rng.permutation(X_permuted.loc[:, col].to_numpy())
+                Y_perm_hat = self.fitted_model.predict(X_permuted)
+                permuted_loss = sum((Y_test - Y_perm_hat) ** 2) if self.eval is None else self.eval(Y_test, Y_perm_hat)
+                permutation_importance.append(permuted_loss - baseline_loss)
 
-            explainer = ShuffleImportanceExplainer(model_inference_function)
+            names = _rank_columns_from_importance(permutation_importance)
+            if len(names) == N:
+                return names
 
-            explanation = explainer.explain(self.test, target=self.target)
-
-            for name, _ in sorted(explanation.get_importances(), key=lambda x: x[1]):
-                names.append(name)
-                N -= 1
-                if N == 0:
-                    break
-
-            return names
+            raise RuntimeError(
+                "Wrong arguments. Unable to compute feature importance for the fitted model."
+            )
 
         try:
-            importance = getattr(self.model, self.importance)
-
+            importance = getattr(importance_model, self.importance)
         except AttributeError:
             return names
 
-        finally:
-            columns = self.test.columns[self.test.columns != self.target]
-            if len(columns) != len(importance):
-                return names
-
-            for _, name in sorted(zip(importance, columns)):
-                names.append(name)
-                N -= 1
-                if N == 0:
-                    break
-
-            return names
+        return _rank_columns_from_importance(importance)
 
     def run(self, *args, **kwargs):
         """
