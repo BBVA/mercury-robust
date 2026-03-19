@@ -688,8 +688,11 @@ def test_model_simplicity_multiclass_classification():
 
 
 def test_drift_prediction_resistance_test():
-    tutorial_data = pathlib.Path(__file__).resolve().parent.parent / "tutorials" / "data" / "credit" / "UCI_Credit_card.csv"
-    df = pd.read_csv(tutorial_data)
+    try:
+        df = pd.read_csv("mercury/robust/tutorials/data/credit/UCI_Credit_card.csv")
+    except FileNotFoundError:
+        tutorial_data = pathlib.Path(__file__).resolve().parent.parent / "tutorials" / "data" / "credit" / "UCI_Credit_card.csv"
+        df = pd.read_csv(tutorial_data)
 
     df = df.loc[:, df.columns != 'ID']
 
