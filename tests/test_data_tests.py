@@ -2,6 +2,8 @@ import pytest
 import seaborn as sns
 import numpy as np
 import pandas as pd
+import warnings
+from types import SimpleNamespace
 
 from mercury.dataschema import DataSchema
 from mercury.dataschema.feature import FeatType
@@ -23,6 +25,30 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
 from sklearn.datasets import make_classification
+
+
+pytestmark = pytest.mark.filterwarnings(
+    "ignore:INTEGER feature size converted to Categorical.*:RuntimeWarning"
+)
+
+
+TITANIC_NUMERIC_FEATURE_MAP = {
+    "pclass": FeatType.DISCRETE,
+    "sibsp": FeatType.DISCRETE,
+    "parch": FeatType.DISCRETE,
+}
+
+TITANIC_ENCODED_FEATURE_MAP = {
+    **TITANIC_NUMERIC_FEATURE_MAP,
+    "sex": FeatType.BINARY,
+    "class": FeatType.CATEGORICAL,
+    "who": FeatType.CATEGORICAL,
+    "deck": FeatType.CATEGORICAL,
+    "embark_town": FeatType.CATEGORICAL,
+    "alive": FeatType.BINARY,
+    "alone": FeatType.BINARY,
+    "embarked": FeatType.CATEGORICAL,
+}
 
 
 @pytest.fixture(scope="module")
@@ -48,14 +74,18 @@ def test_sameschema(datasets):
     titanic2 = titanic.copy()
     titanic2 = titanic.drop("deck", axis=1)
 
-    schma = DataSchema().generate(titanic).calculate_statistics()
-    schma2 = DataSchema().generate(titanic2).calculate_statistics()
-
+    schma = DataSchema().generate(
+        titanic, force_types=TITANIC_NUMERIC_FEATURE_MAP
+    ).calculate_statistics()
     with pytest.raises(FailedTestError) as exinfo:
-        SameSchemaTest(titanic2, schma).run()
+        SameSchemaTest(
+            titanic2, schma, custom_feature_map=TITANIC_NUMERIC_FEATURE_MAP
+        ).run()
 
     # SameSchemaTest(titanic, schma, schema_cat_threshold=0.01).run()
-    SameSchemaTest(titanic, schma).run()
+    SameSchemaTest(
+        titanic, schma, custom_feature_map=TITANIC_NUMERIC_FEATURE_MAP
+    ).run()
 
 def test_sameschema_custom_feature_map(datasets):
 
@@ -70,7 +100,7 @@ def test_sameschema_custom_feature_map(datasets):
 
     # Same types are forced. the test runs fine
     test = SameSchemaTest(
-        titanic2, 
+        titanic2,
         schma_reference,
         custom_feature_map={
             'pclass': FeatType.DISCRETE,
@@ -83,7 +113,9 @@ def test_sameschema_custom_feature_map(datasets):
 def test_drift(datasets):
     tips, titanic = datasets
 
-    schma = DataSchema().generate(titanic).calculate_statistics()
+    schma = DataSchema().generate(
+        titanic, force_types=TITANIC_NUMERIC_FEATURE_MAP
+    ).calculate_statistics()
 
     # Simulate a dataset with drift on the age feature
     titanic2 = titanic.copy()
@@ -162,7 +194,7 @@ def test_drift_different_domain_categoricals(datasets):
         drift_test.run()
 
 def test_drift_target_samples_outside_source_bin_limits():
-    # This is is testing the case where the target distribution in a continous variable contains samples 
+    # This is is testing the case where the target distribution in a continous variable contains samples
     # that are outside of the limits of the binning created in the source distribution
 
 
@@ -222,9 +254,7 @@ def test_label_leaking(datasets):
 
     # Label encoding
     for feat in ["sex", "smoker", "day", "time"]:
-        tips.loc[:, feat] = preprocessing.LabelEncoder().fit_transform(
-            tips.loc[:, feat]
-        )
+        tips[feat] = preprocessing.LabelEncoder().fit_transform(tips[feat].astype(str))
 
     # Categoricals need to be label encoded
     le = preprocessing.LabelEncoder()
@@ -238,16 +268,26 @@ def test_label_leaking(datasets):
         "alone",
         "embarked",
     ]
+    titanic = titanic.astype({f: str for f in categoricals})
     for f in categoricals:
-        titanic[f] = le.fit_transform(titanic.loc[:, f])
+        titanic[f] = le.fit_transform(titanic[f].astype(str))
 
     # Only classification / regression possible
     with pytest.raises(ValueError) as exinfo:
-        test = LabelLeakingTest(titanic, task="wrong", label_name="survived")
+        test = LabelLeakingTest(
+            titanic,
+            task="wrong",
+            label_name="survived",
+            schema_custom_feature_map=TITANIC_ENCODED_FEATURE_MAP,
+        )
         test.run()
     assert "classification" in str(exinfo.value)
 
-    test = LabelLeakingTest(titanic, label_name="survived")
+    test = LabelLeakingTest(
+        titanic,
+        label_name="survived",
+        schema_custom_feature_map=TITANIC_ENCODED_FEATURE_MAP,
+    )
 
     with pytest.raises(FailedTestError) as exinfo:
         test.run()
@@ -272,10 +312,30 @@ def test_label_leaking(datasets):
 
     # test with regression and inject a nonlinear relationship
     tips["injected"] = tips["total_bill"] ** 2
-    test = LabelLeakingTest(tips, label_name="total_bill", threshold=0.03)
+    with warnings.catch_warnings():
+        warnings.filterwarnings(
+            "ignore",
+            message=r"INTEGER feature size converted to Categorical.*",
+            category=RuntimeWarning,
+        )
+        tips_schema = DataSchema().generate(
+            tips, force_types={"size": FeatType.DISCRETE}
+        )
+    test = LabelLeakingTest(
+        tips,
+        label_name="total_bill",
+        threshold=0.03,
+        dataset_schema=tips_schema,
+    )
 
     with pytest.raises(FailedTestError) as exinfo:
-        test.run()
+        with warnings.catch_warnings():
+            warnings.filterwarnings(
+                "ignore",
+                message=r"INTEGER feature size converted to Categorical.*",
+                category=RuntimeWarning,
+            )
+            test.run()
     assert "injected" in str(exinfo.value)
 
     # Test ignoring features.
@@ -355,7 +415,8 @@ def test_noisy_labels_tabular(datasets):
         titanic,
         label_name='survived',
         threshold=0.25,
-        label_issues_args=label_issues_args
+        label_issues_args=label_issues_args,
+        schema_custom_feature_map={"pclass": FeatType.DISCRETE},
     )
     test.run()
 
@@ -365,7 +426,8 @@ def test_noisy_labels_tabular(datasets):
         label_name='survived',
         threshold=0.25,
         calculate_idx_issues=True,
-        label_issues_args=label_issues_args
+        label_issues_args=label_issues_args,
+        schema_custom_feature_map={"pclass": FeatType.DISCRETE},
     )
     test.run()
 
@@ -376,7 +438,8 @@ def test_noisy_labels_tabular(datasets):
         titanic2,
         label_name='survived',
         threshold=0.25,
-        label_issues_args=label_issues_args
+        label_issues_args=label_issues_args,
+        schema_custom_feature_map={"pclass": FeatType.DISCRETE},
     )
     with pytest.raises(FailedTestError) as exinfo:
         test.run()
@@ -391,7 +454,8 @@ def test_noisy_labels_tabular(datasets):
         label_name='survived',
         threshold=0.25,
         preprocessor=preprocessor,
-        label_issues_args=label_issues_args
+        label_issues_args=label_issues_args,
+        schema_custom_feature_map={"pclass": FeatType.DISCRETE},
     )
     test.run()
 
@@ -415,7 +479,8 @@ def test_noisy_labels_tabular(datasets):
         ignore_feats=["pclass"],
         threshold=0.25,
         calculate_idx_issues=True,
-        label_issues_args=label_issues_args
+        label_issues_args=label_issues_args,
+        schema_custom_feature_map={"pclass": FeatType.DISCRETE},
     )
     test.run()
 
@@ -444,6 +509,7 @@ def test_noisy_labels_text():
         label_name='label',
         text_col='text',
         threshold=0.25,
+        schema_custom_feature_map={"label": FeatType.CATEGORICAL},
     )
     test.run()
 
@@ -458,6 +524,7 @@ def test_noisy_labels_text():
         label_name='label',
         text_col='text',
         threshold=0.25,
+        schema_custom_feature_map={"label": FeatType.CATEGORICAL},
     )
     with pytest.raises(FailedTestError) as exinfo:
         test.run()
@@ -470,7 +537,8 @@ def test_noisy_labels_text():
         label_name='label',
         text_col='text',
         threshold=0.20,
-        preprocessor=cv
+        preprocessor=cv,
+        schema_custom_feature_map={"label": FeatType.CATEGORICAL},
     )
     with pytest.raises(FailedTestError) as exinfo:
         test.run()
@@ -567,17 +635,35 @@ def test_label_leaking_test_str(datasets):
     titanic = titanic.dropna()
 
     # Raises ValueError becuase handle_str_cols indicates to raise Error when finding string columns
-    test = LabelLeakingTest(titanic, task="classification", label_name="survived", handle_str_cols='error')
+    test = LabelLeakingTest(
+        titanic,
+        task="classification",
+        label_name="survived",
+        handle_str_cols='error',
+        schema_custom_feature_map=TITANIC_NUMERIC_FEATURE_MAP,
+    )
     with pytest.raises(ValueError) as exinfo:
         test.run()
 
     # String columns are transformed the test is executed. Raises FailedTestError because leaking in alive column
-    test = LabelLeakingTest(titanic, task="classification", label_name="survived", handle_str_cols='transform')
+    test = LabelLeakingTest(
+        titanic,
+        task="classification",
+        label_name="survived",
+        handle_str_cols='transform',
+        schema_custom_feature_map=TITANIC_NUMERIC_FEATURE_MAP,
+    )
     with pytest.raises(FailedTestError) as exinfo:
         test.run()
 
     # Raises ValueError because hand_src_cols param has a wrong value
-    test = LabelLeakingTest(titanic, task="classification", label_name="survived", handle_str_cols='wrong value')
+    test = LabelLeakingTest(
+        titanic,
+        task="classification",
+        label_name="survived",
+        handle_str_cols='wrong value',
+        schema_custom_feature_map=TITANIC_NUMERIC_FEATURE_MAP,
+    )
     with pytest.raises(ValueError) as exinfo:
         test.run()
 
@@ -874,3 +960,93 @@ def test_lin_combinations_cont():
     linear_comb_test = LinearCombinationsTest(df, dataset_schema=schma_reference)
     with pytest.raises(FailedTestError, match="'f1', 'f2'"):
         linear_comb_test.run()
+
+
+def test_schema_loading_and_info_helpers(monkeypatch):
+    df = pd.DataFrame(
+        {
+            "feature": [0, 1, 0, 1, 0, 1],
+            "aux": [1, 0, 1, 0, 1, 0],
+            "target": [0, 1, 0, 1, 0, 1],
+        }
+    )
+    schema = DataSchema().generate(df, force_types={"target": FeatType.CATEGORICAL}).calculate_statistics()
+
+    monkeypatch.setattr(DataSchema, "load", staticmethod(lambda _: schema))
+
+    same_schema_test = SameSchemaTest(df, schema_ref="schema.pkl", custom_feature_map={"target": FeatType.CATEGORICAL})
+    same_schema_test.run()
+
+    drift_test = DriftTest(df[["feature", "aux"]], schema_ref="schema.pkl", drift_detector_args={"p_val": 0.5})
+    assert drift_test._detector_args["p_val"] == 0.5
+    assert drift_test.schema_ref is schema
+
+    label_test = LabelLeakingTest(
+        df,
+        label_name="target",
+        task="classification",
+        threshold=-1,
+        dataset_schema=schema,
+    )
+    assert label_test.info() is None
+    label_test.run()
+    assert "importances" in label_test.info()
+
+
+def test_noisy_labels_info_without_idx_issues(monkeypatch):
+    df = pd.DataFrame(
+        {
+            "f1": [0, 1, 0, 1, 0, 1],
+            "f2": [1, 0, 1, 0, 1, 0],
+            "label": [0, 1, 0, 1, 0, 1],
+        }
+    )
+    schema = DataSchema().generate(df, force_types={"label": FeatType.CATEGORICAL}).calculate_statistics()
+
+    monkeypatch.setattr(
+        "mercury.robust._label_cleaning.get_confident_joint",
+        lambda *args, **kwargs: np.array([[2, 1], [1, 2]]),
+    )
+
+    test = NoisyLabelsTest(
+        df,
+        label_name="label",
+        threshold=1.0,
+        calculate_idx_issues=False,
+        dataset_schema=schema,
+        preprocessor=preprocessing.FunctionTransformer(lambda x: x.values),
+        label_issues_args={"n_folds": 2},
+    )
+    assert test.info() is None
+    test.run()
+    assert test.num_issues == 2
+    assert test.info() == {"rate_issues": 2 / len(df)}
+
+
+def test_sample_leaking_info_before_run_and_hash_inference(monkeypatch):
+    train = pd.DataFrame({"a": [1, 2], "b": [3, 4]})
+    test_df = pd.DataFrame({"a": [5, 6], "b": [7, 8]})
+
+    test = SampleLeakingTest(train, test_df, use_hash=None)
+    assert test.info() is None
+
+    monkeypatch.setattr(
+        "mercury.robust.data_tests.psutil.virtual_memory",
+        lambda: SimpleNamespace(percent=10.0),
+    )
+
+    assert test._infer_use_hashing() is False
+    test.run()
+    assert test.use_hash is False
+    assert test.info()["num_duplicated"] == 0
+
+
+def test_no_duplicates_info_before_run_and_without_hash():
+    df = pd.DataFrame([[1, 2], [3, 4], [1, 2]])
+    test = NoDuplicatesTest(df, use_hash=False)
+
+    assert test.info() is None
+    with pytest.raises(FailedTestError):
+        test.run()
+
+    assert test.info()["num_duplicated"] == 1

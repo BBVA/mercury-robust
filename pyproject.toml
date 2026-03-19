@@ -1,11 +1,11 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=68.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "mercury-robust"
 license = {file = "LICENSE.txt"}
-version = "1.1.4"
+version = "1.2.1"
 authors = [
   { name="Mercury Team", email="mercury.group@bbva.com" },
 ]
@@ -30,7 +30,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-  'tensorflow<2.11',
+  'tensorflow',
   'pytest',
   'flake8',
   'xgboost',
