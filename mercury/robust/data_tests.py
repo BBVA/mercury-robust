@@ -910,7 +910,7 @@ class CohortPerformanceTest(RobustDataTest):
         """
         super().run(*args, **kwargs)
 
-        self.metric_by_group = self.base_dataset.groupby(self.group_col).apply(lambda x: self.eval_fn(x))
+        self.metric_by_group = self.base_dataset.groupby(self.group_col).apply(lambda x: self.eval_fn(x), include_groups=False)
 
         if self.compare_max_diff:
             self._compare_max_diff()
